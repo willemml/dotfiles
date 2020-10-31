@@ -1,0 +1,84 @@
+{
+    "name": "Codespaces General",
+    "extensions": [
+        "cschleiden.vscode-github-actions",
+        "ms-vsliveshare.vsliveshare",
+        "matklad.rust-analyzer",
+        "serayuzgur.crates",
+        "vadimcn.vscode-lldb",
+        "bungcip.better-toml",
+        "DavidAnson.vscode-markdownlint",
+        "Equinusocio.vsc-community-material-theme",
+        "Equinusocio.vsc-material-theme",
+        "equinusocio.vsc-material-theme-icons",
+        "formulahendry.code-runner",
+        "fwcd.kotlin",
+        "matklad.rust-analyzer",
+        "miqh.vscode-language-rust",
+        "ms-azuretools.vscode-docker",
+        "ms-vscode-remote.remote-containers",
+        "ms-vscode.cpptools",
+        "naco-siren.gradle-language",
+        "PKief.material-icon-theme",
+        "redhat.java",
+        "richardwillis.vscode-gradle",
+        "richardwillis.vscode-gradle-extension-pack",
+        "rust-lang.rust",
+        "serayuzgur.crates",
+        "Swellaby.rust-pack",
+        "VisualStudioExptTeam.vscodeintellicode",
+        "vscjava.vscode-java-debug",
+        "vscjava.vscode-java-dependency",
+        "vscjava.vscode-java-pack",
+        "vscjava.vscode-java-test",
+        "vscjava.vscode-maven",
+        "vscode-icons-team.vscode-icons"
+    ],
+    "dockerFile": "Dockerfile",
+    "settings": {
+        "workbench.iconTheme": "material-icon-theme",
+        "files.exclude": {
+            "**/.classpath": true,
+            "**/.project": true,
+            "**/.settings": true,
+            "**/.factorypath": true
+        },
+        "editor.suggestSelection": "first",
+        "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+        "workbench.startupEditor": "newUntitledFile",
+        "[javascript]": {
+            "editor.defaultFormatter": "vscode.typescript-language-features"
+        },
+        "[javascriptreact]": {
+            "editor.defaultFormatter": "vscode.typescript-language-features"
+        },
+        "[html]": {
+            "editor.defaultFormatter": "vscode.html-language-features"
+        },
+        "[json]": {
+            "editor.defaultFormatter": "vscode.json-language-features"
+        },
+        "[jsonc]": {
+            "editor.defaultFormatter": "vscode.json-language-features"
+        },
+        "git.autofetch": true,
+        "git.confirmSync": false,
+        "java.requirements.JDK11Warning": false,
+        "java.semanticHighlighting.enabled": true,
+        "workbench.colorTheme": "Community Material Theme Darker",
+        "kotlin.compiler.jvm.target": "1.8",
+        "C_Cpp.updateChannel": "Insiders",
+        "vsicons.dontShowNewVersionMessage": true,
+        "rust-analyzer.cargo.allFeatures": true,
+        "rust-analyzer.cargo.loadOutDirsFromCheck": true,
+        "rust-client.disableRustup": true,
+        "rust-client.rlsPath": "",
+        "rust.build_lib": false,
+        "rust.features": [],
+        "rust-client.enableMultiProjectSetup": false,
+        "files.insertFinalNewline": true,
+        "editor.cursorStyle": "underline",
+        "files.autoSave": "afterDelay",
+        "files.autoSaveDelay": 500
+    }
+}
