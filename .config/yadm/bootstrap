@@ -23,3 +23,7 @@ rustup target add --toolchain nightly thumbv6m-none-eabi thumbv7em-none-eabihf
 
 # Install Cargo crates
 cargo install cargo-binutils cargo-bloat cargo-deny cargo-embed cargo-expand cargo-flash cargo-generate cargo-make grex miniserve prove-rs-cli probe-run
+
+# Set terminal theme
+.scripts/set_terminal_theme "Material Shell - Dark" .config/material_dark_terminal.xml
+echo "Terminal theme set, restart Terminal to use it."
