@@ -1,0 +1,24 @@
+# Install command line tools
+touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress;
+softwareupdate -i -a
+rm /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
+
+# Install Homebrew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+brew bundle install --global
+
+# Install Oh My ZSH
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+# Install Rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sha -s -- -y
+
+# Install Rust toolchains, components and targets
+rustup install nightly
+rustup component add cargo clippy rust-docs rust-std rustc rustfmt
+rustup component add --toolchain nightly cargo clippy llvm-tools-preview rust-docs rust-src rustc rustfmt
+rustup target add --toolchain nightly thumbv6m-none-eabi thumbv7em-none-eabihf
+
+# Install Cargo crates
+cargo install cargo-binutils cargo-bloat cargo-deny cargo-embed cargo-expand cargo-flash cargo-generate cargo-make grex miniserve prove-rs-cli probe-run
