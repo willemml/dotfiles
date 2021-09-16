@@ -6,7 +6,8 @@ rm /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
 # Install Homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-brew bundle install --global
+brew install rcmdnk/file/brew-file
+brew file install
 
 # Install Oh My ZSH
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
