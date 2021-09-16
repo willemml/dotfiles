@@ -1,0 +1,5 @@
+{
+    "workbench.colorTheme": "Material Darker",
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue"
+}
