@@ -1,3 +1,6 @@
+# Set terminal theme
+.scripts/set_terminal_theme "Material Shell - Dark" .config/material_dark_terminal.xml
+
 # Install command line tools
 touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress;
 softwareupdate -i -a
@@ -8,6 +11,11 @@ rm /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
 
 brew install rcmdnk/file/brew-file
 brew file install
+
+# Install nvim plugins
+curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+echo "Bootstraping Vim"
+nvim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
 
 # Install Oh My ZSH
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -24,6 +32,3 @@ rustup target add --toolchain nightly thumbv6m-none-eabi thumbv7em-none-eabihf
 # Install Cargo crates
 cargo install cargo-binutils cargo-bloat cargo-deny cargo-embed cargo-expand cargo-flash cargo-generate cargo-make grex miniserve prove-rs-cli probe-run
 
-# Set terminal theme
-.scripts/set_terminal_theme "Material Shell - Dark" .config/material_dark_terminal.xml
-echo "Terminal theme set, restart Terminal to use it."
