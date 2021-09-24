@@ -4,6 +4,7 @@
 tap homebrew/core
 brew act
 brew aom
+brew atk
 brew autoconf
 brew automake
 brew bdw-gc
@@ -32,6 +33,7 @@ brew fribidi
 brew fzf
 brew gcc
 brew gdbm
+brew gdk-pixbuf
 brew gettext
 brew ghostscript
 brew giflib
@@ -45,9 +47,11 @@ brew gnupg
 brew gnutls
 brew gobject-introspection
 brew graphite2
+brew gtk+
 brew guile
 brew harfbuzz
 brew hashcat
+brew hicolor-icon-theme
 brew htop
 brew icu4c
 brew ilmbase
@@ -61,8 +65,10 @@ brew jpeg
 brew jq
 brew lame
 brew leptonica
+brew libarchive
 brew libass
 brew libassuan
+brew libb2
 brew libbluray
 brew libde265
 brew libev
@@ -135,6 +141,7 @@ brew openjpeg
 brew openssl@1.1
 brew opus
 brew p11-kit
+brew pango
 brew pcre
 brew pcre2
 brew perl
@@ -204,6 +211,7 @@ cask bitwarden
 cask blender
 cask calibre
 cask discord
+cask firefox
 cask gimp
 cask keybase
 cask kicad
@@ -255,4 +263,4 @@ appstore 634148309   Logic Pro           (10.6.3)
 appstore 409203825   Numbers             (11.1)
 appstore 409201541   Pages               (11.1)
 appstore 425424353   The Unarchiver      (4.3.3)
-appstore 497799835   Xcode               (12.5.1)
+appstore 497799835   Xcode               (13.0)
