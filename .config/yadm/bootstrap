@@ -23,8 +23,15 @@ nvim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
 # Install Oh My ZSH
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
+# Install Doom Emacs
+git clone https://github.com/hlissner/doom-emacs ~/.emacs.d
+~/.emacs.d/bin/doom install
+
 # Install Rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sha -s -- -y
+
+# Install rust-analyzer binary for doom
+curl -L https://github.com/rust-analyzer/rust-analyzer/releases/latest/download/rust-analyzer-x86_64-unknown-linux-gnu.gz | gunzip -c - > ~/.bin/rust-analyzer && chmod +x ~/.bin/rust-analyzer
 
 # Install Rust toolchains, components and targets
 rustup install nightly
@@ -33,5 +40,6 @@ rustup component add --toolchain nightly cargo clippy llvm-tools-preview rust-do
 rustup target add --toolchain nightly thumbv6m-none-eabi thumbv7em-none-eabihf
 
 # Install Cargo crates
-cargo install cargo-binutils cargo-bloat cargo-deny cargo-embed cargo-expand cargo-flash cargo-generate cargo-make grex miniserve prove-rs-cli probe-run
+cargo install cargo-binutils cargo-bloat cargo-deny cargo-embed cargo-expand cargo-flash cargo-generate cargo-make grex miniserve prove-rs-cli probe-run cargo-check
 
+source "$HOME/.zshrc"
