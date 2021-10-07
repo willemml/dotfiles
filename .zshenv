@@ -19,17 +19,18 @@ fi
 
 # Java
 export JAVA_HOME="/usr/local/opt/openjdk"
-export CPPFLAGS="-I$JAVA_HOME/include"
 export PATH="$JAVA_HOME/bin:$PATH"
+
+# Compilers
+export CPPFLAGS="-I$JAVA_HOME/include -I/usr/local/opt/llvm/include"
+export LDFLAGS="-L/usr/local/opt/llvm/lib"
 
 # Path
 export PATH="/usr/local/opt/avr-gcc@8/bin:$PATH"
 export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"
 export PATH="/usr/local/opt/sphinx-doc/bin:$PATH"
-export PATH="/usr/local/opt/avr-gcc@8/bin:$PATH"
 export PATH="/usr/local/opt/python@3.7/bin:$PATH"
 export PATH="/usr/local/opt/llvm/bin:$PATH"
-export PATH="/usr/local/Cellar/llvm/11.0.0/bin/:$PATH"
 
 export PATH="$HOME/.bin:$PATH"
 export PATH="$HOME/.emacs.d/bin:$PATH"
