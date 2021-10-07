@@ -56,3 +56,6 @@
 (use-package evil-colemak-basics
   :config
   (global-evil-colemak-basics-mode))
+
+(after! rustic
+  (setq lsp-rust-server 'rust-analyzer))

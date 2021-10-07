@@ -31,7 +31,7 @@ git clone https://github.com/hlissner/doom-emacs ~/.emacs.d
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sha -s -- -y
 
 # Install rust-analyzer binary for doom
-curl -L https://github.com/rust-analyzer/rust-analyzer/releases/latest/download/rust-analyzer-x86_64-unknown-linux-gnu.gz | gunzip -c - > ~/.bin/rust-analyzer && chmod +x ~/.bin/rust-analyzer
+curl -L https://github.com/rust-analyzer/rust-analyzer/releases/latest/download/rust-analyzer-x86_64-apple-darwin.gz | gunzip -c - > ~/.bin/rust-analyzer && chmod +x ~/.bin/rust-analyzer
 
 # Install Rust toolchains, components and targets
 rustup install nightly
