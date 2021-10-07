@@ -1,0 +1,33 @@
+## Package Manager - brew
+function pi {
+    brew install "${@:1}"
+    brew bundle dump --force --global
+}
+function pic {
+    brew install --cask "${@:1}"
+    brew bundle dump --force --global
+}
+function pr {
+    brew uninstall "${@:1}"
+    brew bundle dump --force --global
+}
+
+alias psearch="brew search"
+alias pu="brew update && brew upgrade"
+alias orphans="brew autoremove"
+alias bdump="brew bundle dump --force --global"
+alias binstall="brew bundle install --global"
+
+eval $(thefuck --alias)
+
+alias edit="$EDITOR"
+alias zshconfig="$EDITOR ~/.zshrc"
+alias ohmyzsh="$EDITOR ~/.oh-my-zsh"
+
+alias reload='source ~/.zshrc'
+alias zshrc="$EDITOR ~/.zshrc"
+alias zshenv="$EDITOR ~/.zshenv"
+alias zshaliases="$EDITOR ~/.zsh_aliases"
+
+alias xclip="pbcopy"
+alias ding="osascript -e 'display notification \"Command done.\"'"

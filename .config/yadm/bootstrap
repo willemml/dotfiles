@@ -9,8 +9,8 @@ rm /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
 # Install Homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-brew install rcmdnk/file/brew-file
-brew file install
+# Install packages/apps
+brew bundle --global
 
 # Install NodeJS LTS
 curl -sL install-node.now.sh/lts | bash
