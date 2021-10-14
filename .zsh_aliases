@@ -29,7 +29,17 @@ alias zshrc="$EDITOR ~/.zshrc"
 alias zshenv="$EDITOR ~/.zshenv"
 alias zshaliases="$EDITOR ~/.zsh_aliases"
 
+alias ssh="mosh"
+
 alias xclip="pbcopy"
 alias ding="osascript -e 'display notification \"Command done.\"'"
 
+alias cfmt="cargo fmt --all"
+alias clippy="cargo clippy -- -D warnings"
+
 alias raupdate="curl -L https://github.com/rust-analyzer/rust-analyzer/releases/latest/download/rust-analyzer-x86_64-apple-darwin.gz | gunzip -c - > ~/.bin/rust-analyzer && chmod +x ~/.bin/rust-analyzer"
+
+function arm_gcc {
+    export PATH="/Applications/ARM/arm-none-eabi/bin:$PATH"
+}
+

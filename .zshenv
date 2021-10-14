@@ -18,19 +18,19 @@ if type rg &> /dev/null; then
 fi
 
 # Java
-export JAVA_HOME="/usr/local/opt/openjdk"
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/adoptopenjdk-15.jdk/Contents/Home"
 export PATH="$JAVA_HOME/bin:$PATH"
 
 # Compilers
-export CPPFLAGS="-I$JAVA_HOME/include -I/usr/local/opt/llvm/include"
+export CPPFLAGS="-I$JAVA_HOME/include -I/usr/local/opt/llvm/include -I/Applications/ARM/arm-none-eabi/include"
 export LDFLAGS="-L/usr/local/opt/llvm/lib"
 
 # Path
-export PATH="/usr/local/opt/avr-gcc@8/bin:$PATH"
 export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"
 export PATH="/usr/local/opt/sphinx-doc/bin:$PATH"
 export PATH="/usr/local/opt/python@3.7/bin:$PATH"
 export PATH="/usr/local/opt/llvm/bin:$PATH"
+export PATH="/Applications/ARM/bin:$PATH"
 
 export PATH="$HOME/.bin:$PATH"
 export PATH="$HOME/.emacs.d/bin:$PATH"
