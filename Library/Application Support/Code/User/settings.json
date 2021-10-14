@@ -9,5 +9,6 @@
         "**/.settings": true,
         "**/.factorypath": true
     },
-    "redhat.telemetry.enabled": false
+    "redhat.telemetry.enabled": false,
+    "explorer.confirmDelete": false
 }
