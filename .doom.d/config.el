@@ -59,3 +59,5 @@
 
 (after! rustic
   (setq lsp-rust-server 'rust-analyzer))
+
+(setq rustic-flycheck-clippy-params "--message-format=json")
