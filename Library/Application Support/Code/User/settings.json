@@ -10,5 +10,17 @@
         "**/.factorypath": true
     },
     "redhat.telemetry.enabled": false,
-    "explorer.confirmDelete": false
+    "explorer.confirmDelete": false,
+    "security.workspace.trust.untrustedFiles": "newWindow",
+    "security.workspace.trust.banner": "never",
+    "security.workspace.trust.enabled": false,
+    "kite.showWelcomeNotificationOnStartup": false,
+    "editor.inlineSuggest.enabled": true,
+    "github.copilot.enable": {
+        "*": true,
+        "yaml": false,
+        "plaintext": false,
+        "markdown": false,
+        "cpp": false
+    }
 }

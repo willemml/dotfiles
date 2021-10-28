@@ -14,6 +14,7 @@ tap "railwaycat/emacsmacport"
 tap "rcmdnk/file"
 tap "riscv/riscv"
 brew "act"
+brew "libpng"
 brew "gettext"
 brew "pcre"
 brew "glib"
@@ -23,8 +24,8 @@ brew "nghttp2"
 brew "node", link: false
 brew "bitwarden-cli"
 brew "boost"
-brew "libpng"
 brew "pkg-config"
+brew "cmake"
 brew "gmp", link: false
 brew "coreutils"
 brew "libusb"
@@ -48,6 +49,7 @@ brew "ffmpeg"
 brew "fzf"
 brew "gcc"
 brew "git"
+brew "git-crypt"
 brew "glow"
 brew "gnu-sed"
 brew "libgcrypt"
@@ -55,6 +57,7 @@ brew "gnupg"
 brew "gtk+"
 brew "hashcat"
 brew "htop"
+brew "hyperfine"
 brew "hyperkit"
 brew "python@3.8"
 brew "imagemagick"
@@ -78,6 +81,7 @@ brew "nmap"
 brew "perl"
 brew "pinentry-mac"
 brew "pv"
+brew "python@3.10"
 brew "ripgrep"
 brew "rsync"
 brew "ruby"
@@ -107,8 +111,10 @@ cask "calibre"
 cask "discord"
 cask "firefox"
 cask "gimp"
+cask "jetbrains-toolbox"
 cask "keybase"
 cask "kicad"
+cask "logitech-g-hub"
 cask "native-access"
 cask "nvidia-geforce-now"
 cask "osxfuse"
@@ -126,11 +132,12 @@ cask "vlc"
 cask "zerotier-one"
 cask "zoom"
 mas "AdGuard for Safari", id: 1440147259
+mas "Apple Configurator 2", id: 1037126344
 mas "Compressor", id: 424390742
+mas "Developer", id: 640199958
 mas "Final Cut Pro", id: 424389933
 mas "Keynote", id: 409183694
 mas "Logic Pro", id: 634148309
 mas "Numbers", id: 409203825
 mas "Pages", id: 409201541
 mas "The Unarchiver", id: 425424353
-mas "Xcode", id: 497799835

@@ -1,4 +1,0 @@
-#!/bin/bash
-
-curl -fLo /tmp/yadm https://github.com/TheLocehiliosan/yadm/raw/master/yadm && chmod a+x /tmp/yadm
-/tmp/yadm clone https://github.com/willemml/dotfiles-yadm

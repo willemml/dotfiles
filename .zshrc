@@ -17,6 +17,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 HIST_STAMPS="dd-mm-yyyy"
 
 plugins=(git history)
+setopt extendedglob
 
 eval $(minikube docker-env)
 

@@ -10,6 +10,16 @@ export EDITOR='nvim'
 export VISUAL="$EDITOR"
 export GIT_EDITOR="$EDITOR"
 
+MAX_MEMORY_UNITS=KB
+
+TIMEFMT='%J   %U  user %S system %P cpu %*E total'$'\n'\
+'avg shared (code):         %X KB'$'\n'\
+'avg unshared (data/stack): %D KB'$'\n'\
+'total (sum):               %K KB'$'\n'\
+'max memory:                %M '$MAX_MEMORY_UNITS''$'\n'\
+'page faults from disk:     %F'$'\n'\
+'other page faults:         %R'
+
 # Use ripgrep and FZF
 which rg > /dev/null && alias grep=rg
 if type rg &> /dev/null; then
@@ -26,13 +36,18 @@ export CPPFLAGS="-I$JAVA_HOME/include -I/usr/local/opt/llvm/include -I/Applicati
 export LDFLAGS="-L/usr/local/opt/llvm/lib"
 
 # Path
+export PATH="/Applications/ARM/bin:$PATH"
 export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"
 export PATH="/usr/local/opt/sphinx-doc/bin:$PATH"
 export PATH="/usr/local/opt/python@3.7/bin:$PATH"
 export PATH="/usr/local/opt/llvm/bin:$PATH"
-export PATH="/Applications/ARM/bin:$PATH"
 
 export PATH="$HOME/.bin:$PATH"
 export PATH="$HOME/.emacs.d/bin:$PATH"
 export PATH="$HOME/.yarn/bin:$PATH"
 export PATH="$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+export WASMTIME_HOME="$HOME/.wasmtime"
+
+export PATH="$WASMTIME_HOME/bin:$PATH"
+
