@@ -19,6 +19,8 @@ HIST_STAMPS="dd-mm-yyyy"
 plugins=(git history)
 setopt extendedglob
 
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 eval $(minikube docker-env)
 
 # Oh My Zsh

@@ -29,8 +29,6 @@ alias zshrc="$EDITOR ~/.zshrc"
 alias zshenv="$EDITOR ~/.zshenv"
 alias zshaliases="$EDITOR ~/.zsh_aliases"
 
-alias ssh="mosh"
-
 alias xclip="pbcopy"
 alias ding="osascript -e 'display notification \"Command done.\"'"
 
