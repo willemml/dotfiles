@@ -1,45 +1,58 @@
-# Set terminal theme
+# Set the terminal theme
 .scripts/set_terminal_theme "Material Shell - Dark" .config/material_dark_terminal.xml
 
-# Install command line tools
-touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress;
-softwareupdate -i -a
-rm /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
+# Install Oh My ZSH
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # Install Homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-# Install packages/apps
+# Make sure brew is in the environement
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# Install brew packages/apps
 brew bundle --global
 
-# Install NodeJS LTS
-curl -sL install-node.now.sh/lts | bash
+# Setup git gpg signing
+git config --global gpg.program $(which gpg)
+# List available signing keys
+gpg --list-secret-keys --keyid-format=long
+echo "Choose the gpg key you want to use for signing git commits"
+echo "Format: \'sec   4096R/IDHERE 2016-03-10 [expires: 2017-03-10]\'"
+read GPG_KEY_ID
+# Set the default git commit signing key
+git config --global user.signingkey $GPG_KEY_ID
+# Enable commit signing by default globally
+git config --global commit.gpgsign true
+# Set the correct path for the pinentry program
+echo "pinentry-program /opt/homebrew/bin/pinentry-mac" >> ~/.gnupg/gpg-agent.conf
+killall gpg-agent
 
 # Install nvim plugins
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 echo "Bootstraping Vim"
 nvim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
 
-# Install Oh My ZSH
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
 # Install Doom Emacs
 git clone https://github.com/hlissner/doom-emacs ~/.emacs.d
 ~/.emacs.d/bin/doom install
 
+# Install rust-analyzer binary for doom
+mkdir $HOME/.bin
+curl -L https://github.com/rust-analyzer/rust-analyzer/releases/latest/download/rust-analyzer-x86_64-apple-darwin.gz | gunzip -c - > ~/.bin/rust-analyzer && chmod +x ~/.bin/rust-analyzer
+
+
 # Install Rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sha -s -- -y
-
-# Install rust-analyzer binary for doom
-curl -L https://github.com/rust-analyzer/rust-analyzer/releases/latest/download/rust-analyzer-x86_64-apple-darwin.gz | gunzip -c - > ~/.bin/rust-analyzer && chmod +x ~/.bin/rust-analyzer
 
 # Install Rust toolchains, components and targets
 rustup install nightly
 rustup component add cargo clippy rust-docs rust-std rustc rustfmt
-rustup component add --toolchain nightly cargo clippy llvm-tools-preview rust-docs rust-src rustc rustfmt
+rustup component add --toolchain nightly cargo clippy llvm-tools-preview rust-src rustc rustfmt
 rustup target add --toolchain nightly thumbv6m-none-eabi thumbv7em-none-eabihf
 
 # Install Cargo crates
 cargo install cargo-binutils cargo-bloat cargo-deny cargo-embed cargo-expand cargo-flash cargo-generate cargo-make grex miniserve prove-rs-cli probe-run cargo-check
 
+# Load the new dotfiles
 source "$HOME/.zshrc"
