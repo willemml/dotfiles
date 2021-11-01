@@ -1,5 +1,5 @@
 {
-    "workbench.colorTheme": "Material Darker",
+    "workbench.colorTheme": "Material Theme Darker",
     "editor.suggestSelection": "first",
     "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
     "editor.bracketPairColorization.enabled": true,
@@ -22,5 +22,7 @@
         "plaintext": false,
         "markdown": false,
         "cpp": false
-    }
+    },
+    "rust-client.autoStartRls": false,
+    "rust-client.engine": "rust-analyzer"
 }

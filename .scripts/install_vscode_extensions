@@ -1,0 +1,11 @@
+code --install-extension bungcip.better-toml
+code --install-extension Equinusocio.vsc-community-material-theme
+code --install-extension Equinusocio.vsc-material-theme
+code --install-extension equinusocio.vsc-material-theme-icons
+code --install-extension matklad.rust-analyzer
+code --install-extension ms-vscode.cpptools
+code --install-extension msjsdiag.vscode-react-native
+code --install-extension rust-lang.rust
+code --install-extension serayuzgur.crates
+code --install-extension Swellaby.rust-pack
+code --install-extension yzhang.markdown-all-in-one

@@ -55,4 +55,6 @@ export VULKAN_SDK="/usr/local/lib/vulkan_sdk/1.2.189.0"
 export VK_ICD_FILENAMES=$VULKAN_SDK/macOS/share/vulkan/icd.d/MoltenVK_icd.json
 export VK_LAYER_PATH=$VULKAN_SDK/macOS/share/vulkan/explicit_layer.d
 
+export PATH="$HOME/.scripts:$PATH"
+
 . "$HOME/.cargo/env"

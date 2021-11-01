@@ -1,5 +1,5 @@
 # Set the terminal theme
-.scripts/set_terminal_theme "Material Shell - Dark" .config/material_dark_terminal.xml
+$HOME/.scripts/set_terminal_theme "Material Shell - Dark" .config/material_dark_terminal.xml
 
 # Install Oh My ZSH
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -53,6 +53,9 @@ rustup target add --toolchain nightly thumbv6m-none-eabi thumbv7em-none-eabihf
 
 # Install Cargo crates
 cargo install cargo-binutils cargo-bloat cargo-deny cargo-embed cargo-expand cargo-flash cargo-generate cargo-make grex miniserve prove-rs-cli probe-run cargo-check
+
+# Install VS Code extensions
+$HOME/.scripts/install_vscode_extensions
 
 # Load the new dotfiles
 source "$HOME/.zshrc"
