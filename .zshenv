@@ -10,30 +10,45 @@ export EDITOR='nvim'
 export VISUAL="$EDITOR"
 export GIT_EDITOR="$EDITOR"
 
-MAX_MEMORY_UNITS=KB
-
-TIMEFMT='%J   %U  user %S system %P cpu %*E total'$'\n'\
-'avg shared (code):         %X KB'$'\n'\
-'avg unshared (data/stack): %D KB'$'\n'\
-'total (sum):               %K KB'$'\n'\
-'max memory:                %M '$MAX_MEMORY_UNITS''$'\n'\
-'page faults from disk:     %F'$'\n'\
-'other page faults:         %R'
+read -r -d '' TIMEFMT <<EOM
+%J   %U  user %S system %P cpu %*E total
+  avg shared (code):         %X KB
+  avg unshared (data/stack): %D KB
+  total (sum):               %K KB
+  max memory:                %M KB
+  page faults from disk:     %F
+  other page faults:         %R
+EOM
 
 # Use ripgrep and FZF
-which rg > /dev/null && alias grep=rg
-if type rg &> /dev/null; then
+if type rg &>/dev/null; then
+  alias grep=rg
   export FZF_DEFAULT_COMMAND='rg --files'
   export FZF_DEFAULT_OPTS='-m --height 50% --border'
 fi
 
 # Java
-export JAVA_HOME="/Library/Java/JavaVirtualMachines/adoptopenjdk-15.jdk/Contents/Home"
-export PATH="$JAVA_HOME/bin:$PATH"
+JHOME="/Library/Java/JavaVirtualMachines/adoptopenjdk-15.jdk/Contents/Home"
+if [ -f "$JHOME" ]; then
+  export JAVA_HOME="$JHOME"
+  export PATH="$JAVA_HOME/bin:$PATH"
+  export CPPFLAGS="-I$JAVA_HOME/include"
+fi
 
 # Compilers
-export CPPFLAGS="-I$JAVA_HOME/include -I/usr/local/opt/llvm/include -I/Applications/ARM/arm-none-eabi/include"
-export LDFLAGS="-L/usr/local/opt/llvm/lib"
+export CPPFLAGS="$CPPFLAGS -I/usr/local/opt/llvm/include"
+IARM="/Applications/ARM/arm-none-eabi/include"
+if [ -f "$IARM" ]; then
+  export CPPFLAGS="$CPPFLAGS -I$IARM"
+fi
+ILLVM="/usr/local/opt/llvm/include"
+if [ -f "$ILLVM" ]; then
+  export CPPFLAGS="$CPPFLAGS -I$ILLVM"
+fi
+FLLVM="/usr/local/opt/llvm/lib"
+if [ -f "$FLLVM" ]; then
+  export LDFLAGS="$FLLVM"
+fi
 
 # Path
 export PATH="/Applications/ARM/bin:$PATH"
@@ -57,4 +72,4 @@ export VK_LAYER_PATH=$VULKAN_SDK/macOS/share/vulkan/explicit_layer.d
 
 export PATH="$HOME/.scripts:$PATH"
 
-. "$HOME/.cargo/env"
+export PATH="/opt/homebrew/opt/openal-soft/bin:$PATH"
