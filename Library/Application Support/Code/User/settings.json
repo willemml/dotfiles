@@ -21,8 +21,11 @@
         "yaml": false,
         "plaintext": false,
         "markdown": false,
-        "cpp": false
+        "cpp": false,
+        "rust": false
     },
     "rust-client.autoStartRls": false,
-    "rust-client.engine": "rust-analyzer"
+    "rust-client.engine": "rust-analyzer",
+    "breadcrumbs.enabled": false,
+    "editor.accessibilitySupport": "off"
 }

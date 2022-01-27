@@ -53,6 +53,12 @@ if type cargo &>/dev/null; then
     alias cc="cargo clippy -- -D warnings"
 fi
 
+if type colima &>/dev/null; then
+    alias cld="colima status 2>/dev/null || colima start"
+    alias cls="colima status"
+    alias cle="colima stop"
+fi
+
 alias raupdate="curl -L https://github.com/rust-analyzer/rust-analyzer/releases/latest/download/rust-analyzer-x86_64-apple-darwin.gz | gunzip -c - > ~/.bin/rust-analyzer && chmod +x ~/.bin/rust-analyzer"
 
 if type python3 &>/dev/null; then
