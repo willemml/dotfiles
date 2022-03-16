@@ -32,6 +32,11 @@ if type minikube > /dev/null; then
   eval $(minikube docker-env)
 fi
 
+if type pyenv > /dev/null; then
+  eval "$(pyenv init --path)"
+  eval "$(pyenv init -)"
+fi
+
 # Rust Cargo
 CARGO=$HOME/.cargo/env
 if [ -f "$CARGO" ]; then

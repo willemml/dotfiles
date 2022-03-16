@@ -22,10 +22,12 @@
         "plaintext": false,
         "markdown": false,
         "cpp": false,
-        "rust": false
+        "rust": false,
+        "java": false
     },
     "rust-client.autoStartRls": false,
     "rust-client.engine": "rust-analyzer",
     "breadcrumbs.enabled": false,
-    "editor.accessibilitySupport": "off"
+    "editor.accessibilitySupport": "off",
+    "C_Cpp.updateChannel": "Insiders"
 }
