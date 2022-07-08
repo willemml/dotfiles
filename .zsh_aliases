@@ -65,3 +65,13 @@ if type python3 &>/dev/null; then
     alias python="python3"
     alias pip="pip3"
 fi
+
+if type fd &>/dev/null; then
+    alias find="echo Use fd instead."
+fi
+
+if type rg &>/dev/null; then
+    alias grep="echo Use rg instead".
+fi
+
+alias clear="echo Press CTRL+L instead."

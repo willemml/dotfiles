@@ -81,3 +81,4 @@ export PATH="$HOME/.scripts:$PATH"
 export PATH="/opt/homebrew/opt/openal-soft/bin:$PATH"
 
 export ANDROID_NDK_HOME="/opt/homebrew/share/android-ndk"
+. "$HOME/.cargo/env"

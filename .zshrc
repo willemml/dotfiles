@@ -1,6 +1,26 @@
 export ZSH="$HOME/.oh-my-zsh"
 OMZSH="$ZSH/oh-my-zsh.sh"
 
+# Environment
+source $HOME/.zshenv
+
+if [ -f "/opt/homebrew/bin/brew" ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+eval $(thefuck --alias)
+
+if type pyenv > /dev/null; then
+  eval "$(pyenv init --path)"
+  eval "$(pyenv init -)"
+fi
+
+# Rust Cargo
+CARGO=$HOME/.cargo/env
+if [ -f "$CARGO" ]; then
+  source $CARGO
+fi
+
 if [ -f "$OMZSH" ]; then
   ZSH_THEME="robbyrussell"
 
@@ -25,27 +45,9 @@ if [ -f "$OMZSH" ]; then
   source $OMZSH
 fi
 
-if [ -f "/opt/homebrew/bin/brew" ]; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-fi
+# Aliases
+source $HOME/.zsh_aliases
 
 if type minikube > /dev/null; then
   eval $(minikube docker-env)
 fi
-
-if type pyenv > /dev/null; then
-  eval "$(pyenv init --path)"
-  eval "$(pyenv init -)"
-fi
-
-# Rust Cargo
-CARGO=$HOME/.cargo/env
-if [ -f "$CARGO" ]; then
-  source $CARGO
-fi
-
-# Environment
-source $HOME/.zshenv
-
-# Aliases
-source $HOME/.zsh_aliases
