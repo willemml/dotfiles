@@ -29,5 +29,9 @@
     "rust-client.engine": "rust-analyzer",
     "breadcrumbs.enabled": false,
     "editor.accessibilitySupport": "off",
-    "C_Cpp.updateChannel": "Insiders"
+    "C_Cpp.updateChannel": "Insiders",
+    "workbench.colorCustomizations": {
+        "[Material Theme Darker]": {}
+    },
+    "editor.multiCursorModifier": "ctrlCmd"
 }

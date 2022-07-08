@@ -1,5 +1,6 @@
 export ZSH="$HOME/.oh-my-zsh"
 OMZSH="$ZSH/oh-my-zsh.sh"
+
 if [ -f "$OMZSH" ]; then
   ZSH_THEME="robbyrussell"
 
@@ -17,7 +18,7 @@ if [ -f "$OMZSH" ]; then
   # see 'man strftime' for details.
   HIST_STAMPS="dd-mm-yyyy"
 
-  plugins=(git history)
+  plugins=(git history thefuck)
   setopt extendedglob
 
   # Oh My Zsh

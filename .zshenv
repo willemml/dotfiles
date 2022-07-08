@@ -50,6 +50,12 @@ if [ -f "$FLLVM" ]; then
   export LDFLAGS="$FLLVM"
 fi
 
+function esp32rust {
+  export PATH="/Users/willem/.espressif/tools/xtensa-esp32-elf-clang/esp-13.0.0-20211203-aarch64-apple-darwin/bin/:$PATH"
+  export LIBCLANG_PATH="/Users/willem/.espressif/tools/xtensa-esp32-elf-clang/esp-13.0.0-20211203-aarch64-apple-darwin/lib/"
+  export PIP_USER=no
+}
+
 # Path
 export PATH="/Applications/ARM/bin:$PATH"
 export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"
@@ -73,3 +79,5 @@ export VK_LAYER_PATH=$VULKAN_SDK/macOS/share/vulkan/explicit_layer.d
 export PATH="$HOME/.scripts:$PATH"
 
 export PATH="/opt/homebrew/opt/openal-soft/bin:$PATH"
+
+export ANDROID_NDK_HOME="/opt/homebrew/share/android-ndk"
