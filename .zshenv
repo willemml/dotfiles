@@ -6,9 +6,13 @@ export LANG=en_US.UTF-8
 export GPG_TTY=$(tty)
 
 # Use nvim
+if type nvim&>/dev/null; then
 export EDITOR='nvim'
 export VISUAL="$EDITOR"
 export GIT_EDITOR="$EDITOR"
+fi
+
+export XDG_CONFIG_HOME="$HOME/.config/"
 
 read -r -d '' TIMEFMT <<EOM
 %J   %U  user %S system %P cpu %*E total
@@ -50,35 +54,16 @@ if [ -f "$FLLVM" ]; then
   export LDFLAGS="$FLLVM"
 fi
 
-function esp32rust {
-  export PATH="/Users/willem/.espressif/tools/xtensa-esp32-elf-clang/esp-13.0.0-20211203-aarch64-apple-darwin/bin/:$PATH"
-  export LIBCLANG_PATH="/Users/willem/.espressif/tools/xtensa-esp32-elf-clang/esp-13.0.0-20211203-aarch64-apple-darwin/lib/"
-  export PIP_USER=no
-}
-
 # Path
-export PATH="/Applications/ARM/bin:$PATH"
 export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"
 export PATH="/usr/local/opt/sphinx-doc/bin:$PATH"
 export PATH="/usr/local/opt/python@3.7/bin:$PATH"
 export PATH="/usr/local/opt/llvm/bin:$PATH"
 
-export PATH="$HOME/.bin:$PATH"
 export PATH="$HOME/.emacs.d/bin:$PATH"
 export PATH="$HOME/.yarn/bin:$PATH"
 export PATH="$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
-export WASMTIME_HOME="$HOME/.wasmtime"
-
-export PATH="$WASMTIME_HOME/bin:$PATH"
-
-export VULKAN_SDK="/usr/local/lib/vulkan_sdk/1.2.189.0"
-export VK_ICD_FILENAMES=$VULKAN_SDK/macOS/share/vulkan/icd.d/MoltenVK_icd.json
-export VK_LAYER_PATH=$VULKAN_SDK/macOS/share/vulkan/explicit_layer.d
-
 export PATH="$HOME/.scripts:$PATH"
 
-export PATH="/opt/homebrew/opt/openal-soft/bin:$PATH"
-
-export ANDROID_NDK_HOME="/opt/homebrew/share/android-ndk"
 . "$HOME/.cargo/env"

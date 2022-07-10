@@ -28,8 +28,7 @@ git config --global commit.gpgsign true
 echo "pinentry-program /opt/homebrew/bin/pinentry-mac" >> ~/.gnupg/gpg-agent.conf
 killall gpg-agent
 
-# Install nvim plugins
-curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+# Init AstroNvim
 echo "Bootstraping Vim"
 nvim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
 
@@ -53,9 +52,6 @@ rustup target add --toolchain nightly thumbv6m-none-eabi thumbv7em-none-eabihf
 
 # Install Cargo crates
 cargo install cargo-binutils cargo-bloat cargo-deny cargo-embed cargo-expand cargo-flash cargo-generate cargo-make grex miniserve probe-rs-cli probe-run cargo-check
-
-# Install VS Code extensions
-$HOME/.scripts/install_vscode_extensions
 
 # Load the new dotfiles
 source "$HOME/.zshrc"

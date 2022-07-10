@@ -5,7 +5,7 @@ Run the following in terminal to start the install:
 ```zsh
 curl -fLo /tmp/yadm https://github.com/TheLocehiliosan/yadm/raw/master/yadm && chmod a+x /tmp/yadm
 
-/tmp/yadm clone git@github.com:willemml/dotfiles
+/tmp/yadm clone --recursive git@github.com:willemml/dotfiles
 
 zsh "$HOME/.config/yadm/bootstrap"
 ```
