@@ -36,6 +36,7 @@ Shortcut | Action
 ## NeoTree
 
 Shortcut | Action
+---|---
  `<leader>e` | Toggle NeoTree
  `<leader>o` | Focus NeoTree
  `?` | Show help
