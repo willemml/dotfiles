@@ -1,10 +1,10 @@
--- more in/all objects between 2 characters
+-- colemak
 local map = vim.keymap.set
 for _, mode in ipairs { "n", "v" } do
   map(mode, "n", "h")
-  map(mode, "e", "j")
+  map(mode, "e", "gj")
   map(mode, "i", "l")
-  map(mode, "u", "k")
+  map(mode, "u", "gk")
 
   map(mode, "E", "<cmd>normal 5e<cr>")
   map(mode, "U", "<cmd>normal 5u<cr>")
@@ -13,14 +13,14 @@ for _, mode in ipairs { "n", "v" } do
 
   map(mode, "h", "<PageUp>")
   map(mode, "'", "<PageDown>")
+
+  map(mode, "k", "i")
+  map(mode, "K", "I")
+  map(mode, "l", "<cmd>undo<cr>")
 end
 
 return {
   n = {
-    -- colemak
-    ["K"] = { "I", desc = "Insert" },
-    ["k"] = { "i", desc = "Insert" },
-    ["l"] = { "<cmd>undo<cr>", desc = "Undo" },
     -- disable default resize bindings
     ["<C-Down>"] = false,
     ["<C-Left>"] = false,
@@ -54,6 +54,20 @@ return {
     -- splits
     ["<leader>ah"] = { "<cmd>split<cr>", desc = "Split window horizontally" },
     ["<leader>av"] = { "<cmd>vsplit<cr>", desc = "Split window vertically" },
+    -- markdown preview
+    ["<leader>mo"] = { "<cmd>MarkdownPreview<cr>", desc = "Open markdown preview" },
+    ["<leader>ms"] = { "<cmd>MarkdownPreviewStop<cr>", desc = "Stop markdown preview" },
+    ["<leader>mt"] = { "<cmd>MarkdownPreviewToggle<cr>", desc = "Toggle markdown preview" },
+    -- github
+    ["<leader>gi"] = { "<cmd>Telescope Octo issues search<cr>", desc = "Search Github issues" },
+    ["<leader>gp"] = { "<cmd>Telescope Octo pr search<cr>", desc = "Search Github pull requests" },
+    -- disable default git bindings
+    ["<leader>gj"] = false,
+    -- git bindings
+    ["<leader>gl"] = { function() require("gitsigns").undo_stage_hunk() end, desc = "Unstage git hunk" },
+    ["<leader>gu"] = { function() require("gitsigns").prev_hunk() end, desc = "Previous git hunk" },
+    ["<leader>ge"] = { function() require("gitsigns").next_hunk() end, desc = "Next git hunk" },
+    ["<leader>gk"] = { function() require("gitsigns").blame_line() end, desc = "View git blame" },
  },
   t = {
     -- ["<esc>"] = false,

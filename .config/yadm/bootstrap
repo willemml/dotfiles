@@ -33,8 +33,8 @@ echo "pinentry-program /opt/homebrew/bin/pinentry-mac" >> ~/.gnupg/gpg-agent.con
 killall gpg-agent
 
 # Init AstroNvim
-echo "Bootstraping Vim"
-nvim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
+echo "Bootstraping AstroNvim"
+nvim  --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 
 # Install Doom Emacs
 git clone https://github.com/hlissner/doom-emacs ~/.emacs.d
