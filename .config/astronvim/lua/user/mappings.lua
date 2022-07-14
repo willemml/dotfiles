@@ -1,27 +1,26 @@
 -- more in/all objects between 2 characters
 local map = vim.keymap.set
 for _, mode in ipairs { "n", "v" } do
-  map(mode, "n", "e")
+  map(mode, "n", "h")
   map(mode, "e", "j")
-  map(mode, "i", "j")
+  map(mode, "i", "l")
   map(mode, "u", "k")
-  map(mode, "S-n", "0")
-  map(mode, "S-i", "$")
+
+  map(mode, "E", "<cmd>normal 5e<cr>")
+  map(mode, "U", "<cmd>normal 5u<cr>")
+  map(mode, "N", "0")
+  map(mode, "I", "$")
+
   map(mode, "h", "<PageUp>")
-  map(mode, "o", "<PageDown>")
+  map(mode, "'", "<PageDown>")
 end
 
 return {
-  v = {
-    -- colemak movement
-    ["n"] = { "h", desc = "Move left" },
-    ["e"] = { "j", desc = "Move down" },
-    ["i"] = { "l", desc = "Move right" },
-    ["u"] = { "k", desc = "Move up" },
-    ["N"] = { "0", desc = "Go to start of line" },
-    ["I"] = { "$", desc = "Go to end of line" },
-  },
   n = {
+    -- colemak
+    ["K"] = { "I", desc = "Insert" },
+    ["k"] = { "i", desc = "Insert" },
+    ["l"] = { "<cmd>undo<cr>", desc = "Undo" },
     -- disable default resize bindings
     ["<C-Down>"] = false,
     ["<C-Left>"] = false,
@@ -32,16 +31,6 @@ return {
     ["<Down>"] = { function() require("smart-splits").resize_down(2) end, desc = "Resize split down" },
     ["<Left>"] = { function() require("smart-splits").resize_left(2) end, desc = "Resize split left" },
     ["<Right>"] = { function() require("smart-splits").resize_right(2) end, desc = "Resize split right" },
-    -- colemak
-    ["K"] = { "I", desc = "Insert" },
-    ["k"] = { "i", desc = "Insert" },
-    ["l"] = { ":undo<cr>", desc = "Undo" },
-    ["n"] = { "h", desc = "Move left" },
-    ["e"] = { "j", desc = "Move down" },
-    ["i"] = { "l", desc = "Move right" },
-    ["u"] = { "k", desc = "Move up" },
-    ["N"] = { "0", desc = "Go to start of line" },
-    ["I"] = { "$", desc = "Go to end of line" },
     -- disable default buffer bindings
     ["<S-l>"] = false,
     ["<S-h>"] = false,

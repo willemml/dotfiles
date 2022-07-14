@@ -20,6 +20,10 @@ if type brew &>/dev/null; then
     alias binstall="brew bundle install --global"
 fi
 
+if type kubectl &>/dev/null; then
+    alias k=kubectl
+fi
+
 if type thefuck &>/dev/null; then
     eval "$(thefuck --alias)"
 fi

@@ -1,15 +1,48 @@
+# Oh My ZSH
+export ZSH="$HOME/.oh-my-zsh"
+
 # Locale
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
+# Brew
+if [ -f "/opt/homebrew/bin/brew" ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+# Rust
+. "$HOME/.cargo/env"
+
+
 # GPG
 export GPG_TTY=$(tty)
 
+# k8s
+export KUBECONFIG="$HOME/homelab/kubespray-admin.conf"
+
 # Use nvim
 if type nvim&>/dev/null; then
-export EDITOR='nvim'
-export VISUAL="$EDITOR"
-export GIT_EDITOR="$EDITOR"
+  export EDITOR='nvim'
+elif type vim&>/dev/null; then
+  export EDITOR='vim'
+elif type vi&>/dev/null; then
+  export EXINIT="$HOME/.exrc"
+  export EDITOR='vi'
+elif type nano&>/dev/null; then
+  export EDITOR='nano'
+elif nc -z 1.1.1.1 53 >/dev/null 2>&1; then
+  echo "You don't seem to have any text editors but you DO have an internet connection..."
+  echo "You should probably install a text editor."
+  export EDITOR="echo Why haven\'t you installed an editor yet?"
+else
+  echo "You probably DON'T have an internet connect OR a text editor..."
+  echo "So you're probably completely fucked."
+  export EDITOR='echo "I told you that you were fucked..."'
+fi
+
+if [[ -v EDITOR ]]; then
+  export VISUAL="$EDITOR"
+  export GIT_EDITOR="$EDITOR"
 fi
 
 export XDG_CONFIG_HOME="$HOME/.config/"
@@ -27,8 +60,10 @@ EOM
 # Use ripgrep and FZF
 if type rg &>/dev/null; then
   alias grep=rg
-  export FZF_DEFAULT_COMMAND='rg --files'
-  export FZF_DEFAULT_OPTS='-m --height 50% --border'
+  if type fzf &>/dev/null; then
+    export FZF_DEFAULT_COMMAND='rg --files'
+    export FZF_DEFAULT_OPTS='-m --height 50% --border'
+  fi
 fi
 
 # Java
@@ -60,10 +95,8 @@ export PATH="/usr/local/opt/sphinx-doc/bin:$PATH"
 export PATH="/usr/local/opt/python@3.7/bin:$PATH"
 export PATH="/usr/local/opt/llvm/bin:$PATH"
 
-export PATH="$HOME/.emacs.d/bin:$PATH"
 export PATH="$HOME/.yarn/bin:$PATH"
 export PATH="$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 export PATH="$HOME/.scripts:$PATH"
 
-. "$HOME/.cargo/env"

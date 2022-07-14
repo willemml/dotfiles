@@ -13,6 +13,10 @@ return {
       --     require("lsp_signature").setup()
       --   end,
       -- },
+      {
+        "iamcco/markdown-preview.nvim",
+        run = function() vim.fn["mkdp#util#install"]() end,
+      },
     },
     -- All other entries override the setup() call for default plugins
     ["null-ls"] = function(config)
@@ -43,7 +47,7 @@ return {
       ensure_installed = { "lua", "rust", "python", "c", "cpp", "java", "bash", "json", "dockerfile", "html", "javascript", "markdown" },
     },
     ["nvim-lsp-installer"] = {
-      ensure_installed = { "sumneko_lua", "rust_analyzer", "quick_lint_js", "html", "dockerls", "clangd", "cmake", "pyright", "taplo", "jsonls" },
+      ensure_installed = { "sumneko_lua", "rust_analyzer", "quick_lint_js", "html", "dockerls", "clangd", "cmake", "pyright", "taplo", "jsonls", "ansiblels" },
     },
     packer = {
       compile_path = vim.fn.stdpath "data" .. "/packer_compiled.lua",

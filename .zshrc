@@ -1,24 +1,13 @@
-export ZSH="$HOME/.oh-my-zsh"
-OMZSH="$ZSH/oh-my-zsh.sh"
-
 # Environment
 source $HOME/.zshenv
 
-if [ -f "/opt/homebrew/bin/brew" ]; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-fi
+OMZSH="$ZSH/oh-my-zsh.sh"
 
 eval $(thefuck --alias)
 
 if type pyenv > /dev/null; then
   eval "$(pyenv init --path)"
   eval "$(pyenv init -)"
-fi
-
-# Rust Cargo
-CARGO=$HOME/.cargo/env
-if [ -f "$CARGO" ]; then
-  source $CARGO
 fi
 
 if [ -f "$OMZSH" ]; then
@@ -44,6 +33,9 @@ if [ -f "$OMZSH" ]; then
   # Oh My Zsh
   source $OMZSH
 fi
+
+# kubectl completion
+[[ $commands[kubectl] ]] && source <(kubectl completion zsh)
 
 # Aliases
 source $HOME/.zsh_aliases
