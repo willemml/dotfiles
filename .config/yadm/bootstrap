@@ -13,6 +13,10 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 # Install brew packages/apps
 brew bundle --global
 
+# iTerm2 config
+defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "~/dotfiles/iterm2"
+defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
+
 # Setup git gpg signing
 git config --global gpg.program $(which gpg)
 # List available signing keys
