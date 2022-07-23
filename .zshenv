@@ -28,6 +28,9 @@ elif type vim&>/dev/null; then
 elif type vi&>/dev/null; then
   export EXINIT="$HOME/.exrc"
   export EDITOR='vi'
+elif type ex&>/dev/null; then
+  export EXINIT="$HOME/.exrc"
+  export EDITOR='ex'
 elif type nano&>/dev/null; then
   export EDITOR='nano'
 elif nc -z 1.1.1.1 53 >/dev/null 2>&1; then

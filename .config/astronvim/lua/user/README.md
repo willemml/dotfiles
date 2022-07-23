@@ -16,6 +16,8 @@ Shortcut | Action
  `E` | Cursor down 5
  `h` | Back one page
  `'` | Forward one page
+ `G` | End of file
+ `<Esc>gg` | Top of file
 
 ## Insert mode
 
@@ -23,6 +25,24 @@ Shortcut | Action
 ---|---
  `k` | Insert
  `l` | Undo
+
+## LSP
+
+Shortcut | Action
+---|---
+ `<leader>lf` | Format file
+ `<leader>la` | Code actions
+ `<leader>lD` | All diagnostics
+ `<leader>ld` | Line Diagnostics
+ `<leader>ls` | Symbols in document
+ `<leader>lS` | Symbol outline
+ `<leader>lh` | Symbol help (documentation)
+ `<leader>lr` | Rename symbol
+ `<S-k>` | Hover documentation
+ `gD` | Go to declaration
+ `gd` | Go to definition
+ `gI` | Go to implementation
+ `gr` | References
 
 ## Visual mode
 
@@ -76,6 +96,7 @@ Shortcut | Action
  `<C-e>` | Move to below split
  `<leader>av` | Split window vertically
  `<leader>ah` | Split window horizontally
+ `<C-w>q` | Quit window
 
 ## Buffers
 
@@ -85,15 +106,7 @@ Shortcut | Action
  `<leader>bn` | Cycle to previous buffer tab
  `<leader>bN` | Move buffer tab to the right
  `<leader>bI` | Move buffer tab to the left
- `<leader>bc` | Close current buffer
-
-## Markdown
-
-Shortcut | Action
----|---
- `<leader>mo` | Open preview
- `<leader>ms` | Stop preview
- `<leader>mt` | Toggle preview
+ `<leader>c` | Close buffer
 
 ## Github
 

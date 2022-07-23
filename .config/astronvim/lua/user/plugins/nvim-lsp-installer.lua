@@ -10,6 +10,7 @@ return {
     "pyright",
     "taplo",
     "jsonls",
-    "ansiblels"
+    "ansiblels",
+    "tsserver",
   }
 }

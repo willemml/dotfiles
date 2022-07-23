@@ -68,8 +68,5 @@ return {
     ["<leader>gu"] = { function() require("gitsigns").prev_hunk() end, desc = "Previous git hunk" },
     ["<leader>ge"] = { function() require("gitsigns").next_hunk() end, desc = "Next git hunk" },
     ["<leader>gk"] = { function() require("gitsigns").blame_line() end, desc = "View git blame" },
- },
-  t = {
-    -- ["<esc>"] = false,
   },
 }
