@@ -11,7 +11,10 @@ if [ -f "/opt/homebrew/bin/brew" ]; then
 fi
 
 # Rust
-. "$HOME/.cargo/env"
+CARGOENV="$HOME/.cargo/env"
+if [ -f "$CARGOENV" ]; then
+. $CARGOENV
+fi
 
 
 # GPG
@@ -19,6 +22,9 @@ export GPG_TTY=$(tty)
 
 # k8s
 export KUBECONFIG="$HOME/homelab/kubespray-admin.conf"
+
+# nvim UBC
+export PATH="$PATH:$HOME/.local/nvim-linux64/bin"
 
 # Use nvim
 if type nvim&>/dev/null; then
@@ -91,12 +97,6 @@ FLLVM="/usr/local/opt/llvm/lib"
 if [ -f "$FLLVM" ]; then
   export LDFLAGS="$FLLVM"
 fi
-
-# Path
-export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"
-export PATH="/usr/local/opt/sphinx-doc/bin:$PATH"
-export PATH="/usr/local/opt/python@3.7/bin:$PATH"
-export PATH="/usr/local/opt/llvm/bin:$PATH"
 
 export PATH="$HOME/.yarn/bin:$PATH"
 export PATH="$HOME/.config/yarn/global/node_modules/.bin:$PATH"

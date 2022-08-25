@@ -3,15 +3,8 @@ source $HOME/.zshenv
 
 OMZSH="$ZSH/oh-my-zsh.sh"
 
-eval $(thefuck --alias)
-
-if type pyenv > /dev/null; then
-  eval "$(pyenv init --path)"
-  eval "$(pyenv init -)"
-fi
-
 if [ -f "$OMZSH" ]; then
-  ZSH_THEME="robbyrussell"
+  ZSH_THEME="crcandy"
 
   # Uncomment the following line to use hyphen-insensitive completion.
   # Case-sensitive completion must be off. _ and - will be interchangeable.
@@ -27,11 +20,16 @@ if [ -f "$OMZSH" ]; then
   # see 'man strftime' for details.
   HIST_STAMPS="dd-mm-yyyy"
 
-  plugins=(git history thefuck)
+  plugins=(git history)
   setopt extendedglob
 
   # Oh My Zsh
   source $OMZSH
+fi
+
+if type pyenv > /dev/null; then
+  eval "$(pyenv init --path)"
+  eval "$(pyenv init -)"
 fi
 
 # kubectl completion
