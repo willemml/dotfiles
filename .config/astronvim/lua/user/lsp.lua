@@ -1,6 +1,6 @@
   -- Extend LSP configuration
   return {
-    -- enable servers that you already have installed without lsp-installer
+    -- enable servers that you already have installed without mason
     servers = {
       -- "pyright"
     },

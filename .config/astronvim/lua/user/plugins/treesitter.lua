@@ -11,6 +11,7 @@ return {
     "dockerfile",
     "html",
     "javascript",
-    "markdown"
+    "markdown",
+    "svelte"
   }
 }

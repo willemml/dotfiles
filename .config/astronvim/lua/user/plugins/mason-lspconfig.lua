@@ -12,5 +12,7 @@ return {
     "jsonls",
     "ansiblels",
     "tsserver",
+    "css-lsp",
+    "svelte",
   }
 }
