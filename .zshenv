@@ -76,8 +76,8 @@ if type rg &>/dev/null; then
 fi
 
 # Java
-JHOME="/Library/Java/JavaVirtualMachines/adoptopenjdk-15.jdk/Contents/Home"
-if [ -f "$JHOME" ]; then
+JHOME="/opt/homebrew/opt/openjdk"
+if [ -d "$JHOME" ]; then
   export JAVA_HOME="$JHOME"
   export PATH="$JAVA_HOME/bin:$PATH"
   export CPPFLAGS="-I$JAVA_HOME/include"
@@ -102,4 +102,17 @@ export PATH="$HOME/.yarn/bin:$PATH"
 export PATH="$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 export PATH="$HOME/.scripts:$PATH"
+
+if type x86_64-unknown-linux-gnu-gcc &>/dev/null; then
+  export CC_x86_64_unknown_linux_gnu=x86_64-unknown-linux-gnu-gcc
+  export CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER=x86_64-unknown-linux-gnu-gcc
+fi
+
+if type x86_64-unknown-linux-gnu-g++ &>/dev/null; then
+  export CXX_x86_64_unknown_linux_gnu=x86_64-unknown-linux-gnu-g++
+fi
+
+if type x86_64-unknown-linux-gnu-ar &>/dev/null; then
+  export AR_x86_64_unknown_linux_gnu=x86_64-unknown-linux-gnu-ar
+fi
 
