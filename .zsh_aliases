@@ -79,3 +79,5 @@ if type rg &>/dev/null; then
 fi
 
 alias clear="echo Press CTRL+L instead."
+
+alias psxa="ps xa | rg"
