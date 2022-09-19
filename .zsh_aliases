@@ -14,10 +14,21 @@ if type brew &>/dev/null; then
     }
 
     alias psearch="brew search"
+    alias pinfo="brew info"
     alias pu="brew update && brew upgrade"
     alias orphans="brew autoremove"
     alias bdump="brew bundle dump --force --global"
     alias binstall="brew bundle install --global"
+fi
+
+if type jq &>/dev/null; then
+    function json {
+        local file="$1"
+
+        shift 1
+
+        cat "$file" | jq "$@"
+    }
 fi
 
 if type kubectl &>/dev/null; then
@@ -81,3 +92,4 @@ fi
 alias clear="echo Press CTRL+L instead."
 
 alias psxa="ps xa | rg"
+
