@@ -7,6 +7,7 @@ export LANG=en_US.UTF-8
 
 # Brew
 if [ -f "/opt/homebrew/bin/brew" ]; then
+  export HOMEBREW_NO_ANALYTICS=0
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
@@ -15,6 +16,9 @@ CARGOENV="$HOME/.cargo/env"
 if [ -f "$CARGOENV" ]; then
 . $CARGOENV
 fi
+
+# home local bin
+[[ -d "$HOME/.local/bin/" ]] && export PATH="$HOME/.local/bin:$PATH"
 
 # Node Version Manager
 export NVM_DIR="$HOME/.config//nvm"

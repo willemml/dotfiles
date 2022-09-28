@@ -41,3 +41,4 @@ source $HOME/.zsh_aliases
 if type minikube > /dev/null; then
   eval $(minikube docker-env)
 fi
+
