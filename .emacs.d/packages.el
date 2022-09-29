@@ -1,4 +1,4 @@
-no;;; packages.el --- Install and configure packages
+;;; packages.el --- Install and configure packages
 ;;; Commentary:
 ;; Package init file --- install and configure packages
 
@@ -12,11 +12,7 @@ no;;; packages.el --- Install and configure packages
 (require 'package)
 
 ;; Melpa
-(add-to-list 'package-archives
-	     '("melpa" . "https://melpa.org/packages/") t)
-;; Org ELPA archive
-(add-to-list 'package-archives
-	     '("org" . "https://orgmode.org/elpa/") t)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
 ;; Enable `use-package`
@@ -28,64 +24,32 @@ no;;; packages.el --- Install and configure packages
 (setq use-package-always-ensure t)
 
 ;; Install the JetBrains Darcula theme
-(use-package jetbrains-darcula-theme
-	     :config
-	     (load-theme 'jetbrains-darcula t))
+(use-package
+  jetbrains-darcula-theme
+  :config (load-theme 'jetbrains-darcula t))
 
-;; Get emacsql-sqlite for org-roam
-(use-package emacsql-sqlite)
+(defun elisp-format-buffer-cleanup-whitespace ()
+  "Format Emacs Lisp code and then run 'whitespace-cleanup'."
+  (interactive)
+  (elisp-format-buffer)
+  (whitespace-cleanup))
 
-;; Install `org-roam`
-(use-package org-roam
-  :custom
-  (org-roam-directory (file-truename "~/org-roam"))
-  ;; Always wrap lines in org mode
-  (org-startup-truncated nil)
-  :bind (("C-c n l" . org-roam-buffer-toggle)
-	 ("C-c n f" . org-roam-node-find)
-	 ("C-c n i" . org-roam-node-insert))
-  :config
-  (org-roam-db-autosync-mode))
+(defun my-elisp-mode-before-save-hook ()
+  "Format Emacs Lisp code when in 'emacs-lisp-mode'.
+Check if major mode is 'emacs-lisp-mode' then format code and
+cleanup whitespace."
+  (when (eq major-mode 'emacs-lisp-mode)
+    (elisp-format-buffer-cleanup-whitespace)))
 
-;; LSP mode
-(use-package lsp-mode
-  :init
-  (setq lsp-keymap-prefix "C-c l")
-  :hook ((rust-mode . lsp)
-         (lsp-mode . lsp-enable-which-key-integration))
-  :commands lsp)
-(use-package lsp-ui :commands lsp-ui-mode)
+;; Format on save
+(add-hook 'before-save-hook #'elisp-format-buffer-cleanup-whitespace)
 
-;; Rust mode
-(use-package rust-mode
-  :custom
-  (rust-format-on-save t)
-  :hook (rust-mode . (lambda () (setq indent-tabs-mode nil)))
-  :hook (rust-mode . (lambda () (prettify-symbols-mode)))
-  :bind ("C-c C-c" . 'rust-run)
-  :commands rust-run)
-
-;; Rustic
-(use-package rustic
-  :custom
-  (rustic-lsp-server 'rust-analyzer))
-
-;; Highlighting with tree-sitter
-(use-package tree-sitter-langs)
-(use-package tree-sitter
-  :config
-  (require 'tree-sitter-langs)
-  (global-tree-sitter-mode)
-  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
-
-;; Company mode for completion pop-ups
-(use-package company
-  :init (global-company-mode)
-  :commands global-company-mode)
-
-;; Flycheck for syntax checking
-(use-package flycheck
-  :init (global-flycheck-mode))
+;; Elisp Format to make elisp code look nice, also set keybind ~C-c
+;; C-f~ to format elisp code in buffers
+(use-package
+  elisp-format
+  :bind (:map emacs-lisp-mode-map
+	      ("C-c C-f" . elisp-format-buffer-cleanup-whitespace)))
 
 (provide 'packages)
 
