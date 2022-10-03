@@ -37,6 +37,8 @@
 	 ("C-c n f" . org-roam-node-find)
 	 :map org-mode-map
 	 ("C-c n i" . org-roam-node-insert)
+	 ("C-c n I" . my/org-roam-node-insert-immediate)
+	 ("C-c C-o" . my/follow-org-link)
 	 ("C-c n c" . org-id-get-create)
 	 ("C-c n a" . org-roam-alias-add)
 	 ("C-c n t" . org-roam-tag-add)
@@ -73,15 +75,6 @@ window otherwise opens in current window."
   (if arg
       (org-open-at-point)
     (my/org-force-open-current-window)))
-
-
-;; Define some keybinds for org-mode
-(add-hook 'org-mode-hook
-	  (lambda ()
-	    (define-key org-mode-map "\C-c C-o"
-	      'my/follow-org-link)
-	    (define-key org-mode-map "\C-c n I"
-	      'my/org-roam-node-insert-immediate)))
 
 ;; Org Tempo for quick structure templates
 (require 'org-tempo)

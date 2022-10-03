@@ -38,8 +38,7 @@
 See 'format-all-formatters' for more info."
   (add-to-list 'format-all-formatters '(language formatter)))
 
-(add-hook 'c-mode-hook (lambda ()
-			 '(my-format-all-hook "C" 'clang-format)))
+(setq-default format-all-formatters format-all-default-formatters)
 
 (provide 'packages)
 
