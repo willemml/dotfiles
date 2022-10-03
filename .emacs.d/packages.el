@@ -28,28 +28,18 @@
   jetbrains-darcula-theme
   :config (load-theme 'jetbrains-darcula t))
 
-(defun elisp-format-buffer-cleanup-whitespace ()
-  "Format Emacs Lisp code and then run 'whitespace-cleanup'."
-  (interactive)
-  (elisp-format-buffer)
-  (whitespace-cleanup))
-
-(defun my-elisp-mode-before-save-hook ()
-  "Format Emacs Lisp code when in 'emacs-lisp-mode'.
-Check if major mode is 'emacs-lisp-mode' then format code and
-cleanup whitespace."
-  (when (eq major-mode 'emacs-lisp-mode)
-    (elisp-format-buffer-cleanup-whitespace)))
-
-;; Format on save
-(add-hook 'before-save-hook #'elisp-format-buffer-cleanup-whitespace)
-
-;; Elisp Format to make elisp code look nice, also set keybind ~C-c
-;; C-f~ to format elisp code in buffers
+;; format-all.el for handling all code formatting/prettifying.
 (use-package
-  elisp-format
-  :bind (:map emacs-lisp-mode-map
-	      ("C-c C-f" . elisp-format-buffer-cleanup-whitespace)))
+  format-all
+  :bind ("C-c C-y" . 'format-all-buffer))
+
+(defun my-format-all-hook (language formatter)
+  "Set the default format-all formatter for language.
+See 'format-all-formatters' for more info."
+  (add-to-list 'format-all-formatters '(language formatter)))
+
+(add-hook 'c-mode-hook (lambda ()
+			 '(my-format-all-hook "C" 'clang-format)))
 
 (provide 'packages)
 

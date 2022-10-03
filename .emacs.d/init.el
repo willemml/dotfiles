@@ -58,7 +58,9 @@ the file relative to the Emacs dir)."
 ;; org-mode and org-roam related config
 (my/config-file 'orgmode-orgroam-file "org.el")
 ;; LSP config
-(my/config-file 'lsp-config-file "lsp.el")
+;; (my/config-file 'lsp-config-file "lsp.el")
+
+(server-start)
 
 (provide 'init)
 
