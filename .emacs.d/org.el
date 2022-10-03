@@ -78,9 +78,9 @@ window otherwise opens in current window."
 ;; Define some keybinds for org-mode
 (add-hook 'org-mode-hook
 	  (lambda ()
-	    (define-key org-mode-map "C-c C-o"
+	    (define-key org-mode-map "\C-c C-o"
 	      'my/follow-org-link)
-	    (define-key org-mode-map "C-c n I"
+	    (define-key org-mode-map "\C-c n I"
 	      'my/org-roam-node-insert-immediate)))
 
 ;; Org Tempo for quick structure templates
