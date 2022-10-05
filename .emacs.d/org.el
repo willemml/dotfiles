@@ -9,8 +9,6 @@
 
 (my/customize-set-variables
  '('(org-roam-v2-ack t)
-   ;; Always wrap lines in org mode
-   '(org-startup-truncated nil)
    ;; Always open src blocks in current window
    '(org-src-window-setup 'current-window)
    '(org-roam-completion-everywhere t)
@@ -60,6 +58,7 @@ window otherwise opens in current window."
 
 (add-hook 'org-mode-hook 'org-fragtog-mode)
 (add-hook 'org-mode-hook 'org-latex-impatient-mode)
+(add-hook 'org-mode-hook 'auto-fill-mode)
 
 (org-babel-do-load-languages 'org-babel-load-languages '((ruby . t)
 							 (shell . t)

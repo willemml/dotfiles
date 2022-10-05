@@ -14,8 +14,9 @@
 ;; Set Custom file to avoid clutter in this one
 (setq custom-file (concat user-emacs-directory "/custom.el"))
 
-;; Use `command` as `meta` in macOS
-(setq mac-command-modifier 'meta)
+;; Use `command' as `meta' and `control' in macOS
+(setq mac-left-command-modifier 'meta)
+(setq mac-right-command-modifier 'control)
 (setq mac-option-modifier 'super)
 
 ;; Disable Toolbar
@@ -77,9 +78,6 @@ the file relative to the Emacs dir)."
 
 (setq-default format-all-formatters format-all-default-formatters)
 
-(global-tree-sitter-mode)
-(add-hook 'after-init-hook 'global-company-mode)
-
 (define-key rust-mode-map (kbd "C-c C-r") 'rust-run)
 
 (my/define-multiple-keys rust-mode-map
@@ -89,8 +87,34 @@ the file relative to the Emacs dir)."
 			   ("C-c C-t" rust-test)
 			   ("C-c C-o" rust-compile)))
 
-(add-hook 'rust-mode-hook 'eglot-ensure)
-(add-hook 'c-mode-hook 'eglot-ensure)
+(defun my/enable-ide-features ()
+  "Enable eglot, company, treesitter and electric pairs."
+  (interactive)
+  (eglot-ensure)
+  (company-mode)
+  (electric-pair-mode)
+  (tree-sitter-hl-mode))
+
+(add-hook 'javascript-mode-hook 'my/enable-ide-features)
+(add-hook 'html-mode-hook 'my/enable-ide-features)
+(add-hook 'rust-mode-hook 'my/enable-ide-features)
+(add-hook 'sh-mode-hook 'my/enable-ide-features)
+(add-hook 'c-mode-hook 'my/enable-ide-features)
+
+(defun my/find-file-in-folder-shortcut (folder)
+  "Interactively call find-file after using 'cd' into 'folder'."
+  (cd (expand-file-name folder))
+  (call-interactively #'find-file))
+
+(defun apsc160 ()
+  "Shortcut to APSC 160 folder."
+  (interactive)
+  (my/find-file-in-folder-shortcut "~/Documents/school/ubc/apsc160"))
+
+(defun dev ()
+  "Shortcut to '~/dev' folder."
+  (interactive)
+  (my/find-file-in-folder-shortcut "~/dev"))
 
 (server-start)
 
