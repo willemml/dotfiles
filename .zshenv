@@ -21,7 +21,7 @@ fi
 [[ -d "$HOME/.local/bin/" ]] && export PATH="$HOME/.local/bin:$PATH"
 
 # Node Version Manager
-export NVM_DIR="$HOME/.config//nvm"
+export NVM_DIR="$HOME/.local/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 

@@ -37,11 +37,6 @@ git config --global commit.gpgsign true
 echo "pinentry-program /opt/homebrew/bin/pinentry-mac" >>~/.gnupg/gpg-agent.conf
 killall gpg-agent
 
-# Install rust-analyzer binary
-mkdir $HOME/.bin
-curl -L https://github.com/rust-analyzer/rust-analyzer/releases/latest/download/rust-analyzer-x86_64-apple-darwin.gz |
-	gunzip -c - >"$LOCALBIN/rust-analyzer" && chmod +x "$LOCALBIN/rust-analyzer"
-
 # Install Rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
@@ -49,7 +44,6 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 rustup install nightly
 rustup component add cargo clippy rust-docs rust-std rustc rustfmt
 rustup component add --toolchain nightly cargo clippy llvm-tools-preview rust-src rustc rustfmt
-rustup target add --toolchain nightly thumbv6m-none-eabi thumbv7em-none-eabihf
 
 # Install Cargo crates
 cargo install cargo-binutils cargo-bloat \
@@ -64,6 +58,18 @@ cargo install cargo-binutils cargo-bloat \
 	probe-rs-cli \
 	probe-run \
 	cargo-check
+
+export NVM_DIR="$HOME/.local/nvm" && (
+	git clone https://github.com/nvm-sh/nvm.git "$NVM_DIR"
+	cd "$NVM_DIR"
+	git checkout $(git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1))
+) && \. "$NVM_DIR/nvm.sh"
+
+nvm install node
+
+curl -o- -L https://yarnpkg.com/install.sh | bash
+
+yarn global upgrade
 
 # Load the new dotfiles
 source "$HOME/.zshrc"
