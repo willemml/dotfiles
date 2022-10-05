@@ -1,7 +1,0 @@
-#!/bin/sh
-
-THEME="$(cat $2)"
-
-plutil -replace Window\ Settings."$1" -xml "$THEME" ~/Library/Preferences/com.apple.Terminal.plist
-defaults write com.apple.Terminal "Default Window Settings" -string "$1"
-defaults write com.apple.Terminal "Startup Window Settings" -string "$1"

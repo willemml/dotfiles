@@ -1,21 +1,26 @@
-# Set the terminal theme
-$HOME/.scripts/set_terminal_theme "Material Shell - Dark" .config/material_dark_terminal.xml
+#!/usr/bin/env bash
 
-# Install Oh My ZSH
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+LOCALBIN="$HOME/.local/bin"
 
-# Install Homebrew
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+# Install Oh My ZSH (only if zsh is available)
+if type zsh &>/dev/null; then
+	sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+fi
 
-# Make sure brew is in the environement
-eval "$(/opt/homebrew/bin/brew shellenv)"
+if [ $(uname) == "Darwin" ]; then
+	# Install Homebrew
+	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-# Install brew packages/apps
-brew bundle --global
+	# Make sure brew is in the environement
+	eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# iTerm2 config
-defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "~/dotfiles/iterm2"
-defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
+	# Install brew packages/apps
+	brew bundle --global
+
+	# iTerm2 config
+	defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "~/.config/iterm2"
+	defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
+fi
 
 # Setup git gpg signing
 git config --global gpg.program $(which gpg)
@@ -29,21 +34,13 @@ git config --global user.signingkey $GPG_KEY_ID
 # Enable commit signing by default globally
 git config --global commit.gpgsign true
 # Set the correct path for the pinentry program
-echo "pinentry-program /opt/homebrew/bin/pinentry-mac" >> ~/.gnupg/gpg-agent.conf
+echo "pinentry-program /opt/homebrew/bin/pinentry-mac" >>~/.gnupg/gpg-agent.conf
 killall gpg-agent
 
-# Init AstroNvim
-echo "Bootstraping AstroNvim"
-nvim  --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
-
-# Install Doom Emacs
-git clone https://github.com/hlissner/doom-emacs ~/.emacs.d
-~/.emacs.d/bin/doom install
-
-# Install rust-analyzer binary for doom
+# Install rust-analyzer binary
 mkdir $HOME/.bin
-curl -L https://github.com/rust-analyzer/rust-analyzer/releases/latest/download/rust-analyzer-x86_64-apple-darwin.gz | gunzip -c - > ~/.bin/rust-analyzer && chmod +x ~/.bin/rust-analyzer
-
+curl -L https://github.com/rust-analyzer/rust-analyzer/releases/latest/download/rust-analyzer-x86_64-apple-darwin.gz |
+	gunzip -c - >"$LOCALBIN/rust-analyzer" && chmod +x "$LOCALBIN/rust-analyzer"
 
 # Install Rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
@@ -55,7 +52,18 @@ rustup component add --toolchain nightly cargo clippy llvm-tools-preview rust-sr
 rustup target add --toolchain nightly thumbv6m-none-eabi thumbv7em-none-eabihf
 
 # Install Cargo crates
-cargo install cargo-binutils cargo-bloat cargo-deny cargo-embed cargo-expand cargo-flash cargo-generate cargo-make grex miniserve probe-rs-cli probe-run cargo-check
+cargo install cargo-binutils cargo-bloat \
+	cargo-deny \
+	cargo-embed \
+	cargo-expand \
+	cargo-flash \
+	cargo-generate \
+	cargo-make \
+	grex \
+	miniserve \
+	probe-rs-cli \
+	probe-run \
+	cargo-check
 
 # Load the new dotfiles
 source "$HOME/.zshrc"
