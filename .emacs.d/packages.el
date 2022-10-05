@@ -4,41 +4,47 @@
 
 ;;; Code:
 
-;; Install `use-package` if it isn't installed
-(when (not (package-installed-p 'use-package))
-  (package-install 'use-package))
+(setq my/required-packages '(jetbrains-darcula-theme
+			     format-all
+			     emacsql-sqlite
+			     org-roam
+			     org-latex-impatient
+			     org-fragtog
+			     eglot
+			     company
+			     rust-mode
+			     tree-sitter
+			     tree-sitter-langs))
 
 ;; Enable package manager
 (require 'package)
 
 ;; Melpa
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+;; Org ELPA archive
+(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
+
 (package-initialize)
 
-;; Enable `use-package`
-(eval-when-compile
-  (require 'use-package))
+(defun my/install-if-missing (packagename)
+  "Install a package if it is not already installed"
+  (when (not (package-installed-p packagename))
+      (package-install packagename)))
 
-;; Ensure packages referenced by `use-package` are installed
-(require 'use-package-ensure)
-(setq use-package-always-ensure t)
+;; install packages listed in "my/required-packages"
+(defun my/install-required-packages ()
+  "Install packages listed in 'my/required-packages'."
+  (dolist (package my/required-packages nil)
+     (my/install-if-missing package)))
 
-;; Install the JetBrains Darcula theme
-(use-package
-  jetbrains-darcula-theme
-  :config (load-theme 'jetbrains-darcula t))
+(my/install-required-packages)
 
-;; format-all.el for handling all code formatting/prettifying.
-(use-package
-  format-all
-  :bind ("C-c C-y" . 'format-all-buffer))
-
-(defun my-format-all-hook (language formatter)
-  "Set the default format-all formatter for language.
-See 'format-all-formatters' for more info."
-  (add-to-list 'format-all-formatters '(language formatter)))
-
-(setq-default format-all-formatters format-all-default-formatters)
+(require 'eglot)
+(require 'company)
+(require 'rust-mode)
+(require 'format-all)
+(require 'tree-sitter)
+(require 'tree-sitter-langs)
 
 (provide 'packages)
 
