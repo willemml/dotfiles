@@ -75,6 +75,9 @@ window otherwise opens in current window."
 	 :section-numbers nil
 	 :with-toc nil)))
 
+(setq org-latex-impatient-tex2svg-bin
+      (expand-file-name "~/.config/yarn/global/node_modules/.bin/tex2svg"))
+
 (global-set-key (kbd "C-c n l") 'org-roam-buffer-toggle)
 (global-set-key (kbd "C-c n f") 'org-roam-node-find)
 (global-set-key (kbd "C-c n d") 'org-roam-dailies-map)

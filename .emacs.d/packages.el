@@ -4,13 +4,17 @@
 
 ;;; Code:
 
-(setq my/required-packages '(jetbrains-darcula-theme
+(setq my/required-packages '(dracula-theme
 			     format-all
 			     emacsql-sqlite
 			     org-roam
+			     org-roam-ui
 			     org-latex-impatient
 			     org-fragtog
-			     eglot
+			     lsp-mode
+			     lsp-java
+                             lsp-ui
+			     groovy-mode
 			     company
 			     rust-mode
 			     tree-sitter
@@ -26,6 +30,9 @@
 
 (package-initialize)
 
+;; Get available packages
+; (package-refresh-contents)
+
 (defun my/install-if-missing (packagename)
   "Install a package if it is not already installed"
   (when (not (package-installed-p packagename))
@@ -39,7 +46,6 @@
 
 (my/install-required-packages)
 
-(require 'eglot)
 (require 'company)
 (require 'rust-mode)
 (require 'format-all)
