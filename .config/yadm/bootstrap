@@ -2,9 +2,10 @@
 
 LOCALBIN="$HOME/.local/bin"
 
-# Install Oh My ZSH (only if zsh is available)
+# Install Oh My ZSH and powerlevel10k (only if zsh is available)
 if type zsh &>/dev/null; then
-	sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 fi
 
 if [ $(uname) == "Darwin" ]; then

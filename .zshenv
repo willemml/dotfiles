@@ -81,7 +81,8 @@ if type rg &>/dev/null; then
 fi
 
 # Java
-JHOME="/opt/homebrew/opt/openjdk"
+JHOME="/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home"
+#JHOME="/opt/homebrew/opt/openjdk"
 if [ -d "$JHOME" ]; then
 	export JAVA_HOME="$JHOME"
 	export PATH="$JAVA_HOME/bin:$PATH"
