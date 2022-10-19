@@ -1,3 +1,6 @@
 [submodule ".local/share/iterm-colour-schemes"]
 	path = .local/share/iterm-colour-schemes
 	url = git@github.com:mbadolato/iTerm2-Color-Schemes.git
+[submodule ".local/OrgMark"]
+	path = .local/OrgMark
+	url = git@github.com:willemml/OrgMark.git

@@ -49,13 +49,6 @@
 ;; Enable treemacs/lsp-mode sync
 (lsp-treemacs-sync-mode 1)
 
-(defun my/config-file (name relpath)
-  "Define and load a config file.
-NAME is the variable name for the path (RELPATH is the path of
-the file relative to the Emacs dir)."
-  (setq name (expand-file-name relpath user-emacs-directory))
-  (load name))
-
 (defun my/define-multiple-keys (map keys)
   "Define multiple keys in a keymap."
   (dolist (key keys nil)
@@ -66,12 +59,12 @@ the file relative to the Emacs dir)."
   (dolist (variable variables nil)
     (customize-set-variable (car variable) (nth 1 variable))))
 
-;; Custom file, for whatever Custom does
-(my/config-file 'custom-file "custom.el")
-;; Package config file, installing stuff
-(my/config-file 'packages-file "packages.el")
-;; org-mode and org-roam related config
-(my/config-file 'orgmode-orgroam-file "org.el")
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+(add-to-list 'load-path "~/.local/OrgMark/")
+
+(require 'packages)
+(require 'orgconf)
+(require 'orgmark)
 
 ;; Bind "C-c C-/ to comment out a region
 (global-set-key (kbd "C-c C-/") 'comment-region)

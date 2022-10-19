@@ -48,6 +48,26 @@
 	 ))
     (org-open-at-point)))
 
+(defun my/org-roam-filter-by-tag (tag-name)
+  (lambda (node)
+    (member tag-name (org-roam-node-tags node))))
+
+(defun my/org-roam-list-notes-by-tag (tag-name)
+  (mapcar #'org-roam-node-file
+          (seq-filter
+           (my/org-roam-filter-by-tag tag-name)
+           (org-roam-node-list))))
+
+(defun my/refresh-agenda-list ()
+  (interactive)
+  (setq org-agenda-files
+	(delete-dups
+	 (my/org-roam-list-notes-by-tag "todo"))))
+
+
+;; Build the agenda list the first time for the session
+(my/refresh-agenda-list)
+
 (defun my/follow-org-link (arg)
   "Follow a link in org-mode If an argument is given, opens in new
 window otherwise opens in current window."
@@ -81,6 +101,7 @@ window otherwise opens in current window."
 (global-set-key (kbd "C-c n l") 'org-roam-buffer-toggle)
 (global-set-key (kbd "C-c n f") 'org-roam-node-find)
 (global-set-key (kbd "C-c n d") 'org-roam-dailies-map)
+(global-set-key (kbd "C-c n a") 'org-agenda)
 
 (my/define-multiple-keys org-mode-map
 			 '(
@@ -88,9 +109,9 @@ window otherwise opens in current window."
 			   ("C-c n I" my/org-roam-node-insert-immediate)
 			   ("C-c C-o" my/follow-org-link)
 			   ("C-c n c" org-id-get-create)
-			   ("C-c n a" org-roam-alias-add)
+			   ("C-c n n" org-roam-alias-add)
 			   ("C-c n t" org-roam-tag-add)))
 
-(provide 'org)
+(provide 'orgconf)
 
 ;;; org.el ends here
