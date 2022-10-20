@@ -7,6 +7,8 @@
 (setq org-roam-directory (file-truename "~/Documents/org-roam"))
 (setq org-roam-db-location (expand-file-name "org-roam.db" org-roam-directory))
 
+(setq org-html-validation-link nil)
+
 (my/customize-set-variables
  '('(org-roam-v2-ack t)
    ;; Always open src blocks in current window
@@ -24,6 +26,7 @@
 (require 'org-tempo)
 (require 'org-latex-impatient)
 (require 'org-fragtog)
+(require 'ox-publish)
 
 (org-roam-db-autosync-mode)
 
@@ -93,7 +96,16 @@ window otherwise opens in current window."
 	 :publishing-function org-html-publish-to-html
 	 :publishing-directory "~/public_html"
 	 :section-numbers nil
+	 :with-author nil
+	 :with-creator t
+	 :with-toc t
+	 :time-stamp-file nil
 	 :with-toc nil)))
+
+(setq org-html-validation-link nil            ;; Don't show validation link
+      org-html-head-include-scripts nil       ;; Use our own scripts
+      org-html-head-include-default-style nil ;; Use our own styles
+      org-html-head "<link rel=\"stylesheet\" href=\"https://cdn.simplecss.org/simple.min.css\" />")
 
 (setq org-latex-impatient-tex2svg-bin
       (expand-file-name "~/.config/yarn/global/node_modules/.bin/tex2svg"))
