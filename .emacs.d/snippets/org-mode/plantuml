@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: PlantUML
+# key: puml
+# --
+
+#+name: $1
+#+begin_src plantuml :file plantuml_images/$1.png
+  $2
+#+end_src
