@@ -18,78 +18,21 @@ if type brew &>/dev/null; then
 	alias pu="brew update && brew upgrade"
 	alias orphans="brew autoremove"
 	alias bdump="brew bundle dump --force --global"
-	alias binstall="brew bundle install --global"
-fi
-
-if type jq &>/dev/null; then
-	function json {
-		local file="$1"
-
-		shift 1
-
-		cat "$file" | jq "$@"
-	}
-fi
-
-if type kubectl &>/dev/null; then
-	alias k=kubectl
-fi
-
-if type thefuck &>/dev/null; then
-	eval "$(thefuck --alias)"
 fi
 
 alias edit="$EDITOR"
 alias zshrc="$EDITOR ~/.zshrc"
 alias zshenv="$EDITOR ~/.zshenv"
 alias zshaliases="$EDITOR ~/.zsh_aliases"
-alias ohmyzsh="$EDITOR ~/.oh-my-zsh"
 
 alias em='emacsclient -c -n -a "emacs"'
 alias emw='emacsclient -c -a "emacs"'
 
 alias reload='source ~/.zshrc'
 
-if type pbcopy &>/dev/null; then
-	alias xclip="pbcopy"
-fi
-if type osascript &>/dev/null; then
-	alias ding="osascript -e 'display notification \"Command done.\"'"
-fi
-
-if type cargo &>/dev/null; then
-	alias c="cargo"
-	alias cr="cargo run"
-	alias crr="cargo run --release"
-	alias cb="cargo build"
-	alias cbb="cargo build --release"
-	alias ci="cargo install"
-	alias cu="cargo uninstall"
-	alias cf="cargo fmt --all"
-	alias cc="cargo clippy -- -D warnings"
-fi
-
-if type colima &>/dev/null; then
-	alias cld="colima status 2>/dev/null || colima start"
-	alias cls="colima status"
-	alias cle="colima stop"
-fi
-
-alias raupdate="curl -L https://github.com/rust-analyzer/rust-analyzer/releases/latest/download/rust-analyzer-x86_64-apple-darwin.gz | gunzip -c - > ~/.bin/rust-analyzer && chmod +x ~/.bin/rust-analyzer"
-
 if type python3 &>/dev/null; then
 	alias python="python3"
 	alias pip="pip3"
 fi
-
-if type fd &>/dev/null; then
-	alias find="echo Use fd instead."
-fi
-
-if type rg &>/dev/null; then
-	alias grep="echo Use rg instead".
-fi
-
-alias clear="echo Press CTRL+L instead."
 
 alias psxa="ps xa | rg"
