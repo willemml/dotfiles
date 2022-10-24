@@ -22,21 +22,23 @@
 ;; Disable scrollbar
 (scroll-bar-mode -1)
 
-;; If darwin load macOS settings.
-(if (eq system-type 'darwin)
-	(require 'macos))
-
 ;; Disable intro screen on startup
 (setq inhibit-startup-message t)
 
 (add-to-list 'load-path "~/.emacs.d/lisp/")
-(add-to-list 'load-path "~/.local/OrgMark/")
+
+;; If darwin load macOS settings.
+(if (eq system-type 'darwin)
+	(require 'macos))
 
 (require 'myfuncs)
 (require 'packages)
 (require 'orgconf)
 (require 'orgmark)
 (require 'lspconf)
+
+;; Enable yasnippet
+(yas-global-mode 1)
 
 ;; Reduce wrist pain
 (global-set-key (kbd "M-n") "~")

@@ -2,6 +2,7 @@
   "dependencies": {
     "mathjax-node-cli": "^1.0.1",
     "nodemcu-tool": "^3.2.1",
+    "prettier": "^2.7.1",
     "react-devtools": "^4.21.0",
     "serve": "^14.0.1",
     "typescript": "^4.8.4",

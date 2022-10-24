@@ -15,6 +15,9 @@
 (setq mac-pass-command-to-system nil)
 (setq mac-pass-control-to-system nil)
 
+;; Put all backup files in the Trash
+(setq backup-directory-alist '((".*" . "~/.Trash")))
+
 (provide 'macos)
 
 ;;; macos.el ends here

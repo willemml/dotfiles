@@ -6,6 +6,12 @@
 
 ;;; Code:
 
+(require 'company)
+(require 'rust-mode)
+(require 'format-all)
+(require 'tree-sitter)
+(require 'tree-sitter-langs)
+
 ;; Don't use tabs for indents
 (setq indent-tabs-mode nil)
 
@@ -29,6 +35,16 @@
 
 ;; Set the default formatters so that you aren't prompted every time.
 (setq-default format-all-formatters format-all-default-formatters)
+
+;; Align company-mode tooltips to the right hand side
+(setq company-tooltip-align-annotations t)
+
+;; Display number of completions before and after current suggestions
+;; in company-mode
+(setq company-tooltip-offset-display 'lines)
+
+;; Display text icon of type in company popup
+(setq company-format-margin-function #'company-text-icons-margin)
 
 ;; Binds for rust dev.
 (my/define-multiple-keys rust-mode-map

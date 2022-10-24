@@ -6,7 +6,6 @@
 
 (setq my/required-packages '(dracula-theme
 							 format-all
-							 htmlize
 							 emacsql-sqlite
 							 org-roam
 							 org-roam-ui
@@ -17,9 +16,16 @@
                              lsp-ui
 							 groovy-mode
 							 company
+							 yasnippet
+							 yasnippet-snippets
 							 rust-mode
 							 tree-sitter
 							 tree-sitter-langs))
+
+(add-to-list 'load-path "~/.local/OrgMark/")
+
+(let ((default-directory (expand-file-name "~/.emacs.d/gitpackages")))
+  (normal-top-level-add-subdirs-to-load-path))
 
 ;; Enable package manager
 (require 'package)
@@ -48,11 +54,9 @@
 
 (my/install-required-packages)
 
-(require 'company)
-(require 'rust-mode)
-(require 'format-all)
-(require 'tree-sitter)
-(require 'tree-sitter-langs)
+(if (eq system-type 'darwin)
+	(require 'org-mac-image-paste))
+
 
 (provide 'packages)
 
