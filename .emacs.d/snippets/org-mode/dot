@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Graphviz dot
+# key: dot
+# --
+#+name: $1
+#+begin_src dot :file images/$1.png
+  $2
+#+end_src

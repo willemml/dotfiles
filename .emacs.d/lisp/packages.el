@@ -16,6 +16,7 @@
 							 lsp-mode
 							 lsp-java
                              lsp-ui
+							 git-modes
 							 groovy-mode
 							 company
 							 yasnippet
