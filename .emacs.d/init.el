@@ -25,19 +25,12 @@
 ;; Disable intro screen on startup
 (setq inhibit-startup-message t)
 
-(add-to-list 'load-path "~/.emacs.d/lisp/")
-
-(let ((default-directory (expand-file-name "~/.emacs.d/gitpackages")))
-  (normal-top-level-add-subdirs-to-load-path))
-
-;; If darwin load macOS settings.
-(if (eq system-type 'darwin)
-	(require 'macos))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/"))
 
 ;; Load config
 (require 'myfuncs)
+(require 'packages)
 (require 'orgconf)
-(require 'orgmark)
 (require 'lspconf)
 
 ;; Load yasnippet
@@ -50,6 +43,10 @@
 ;; Reduce wrist pain
 (global-set-key (kbd "M-n") "~")
 (global-set-key (kbd "M-N") "`")
+
+;; If darwin load macOS settings.
+(if (eq system-type 'darwin)
+	(require 'macos))
 
 ;; Bind to cleanup whitespace
 (global-set-key (kbd "C-c M-c") 'whitespace-cleanup)

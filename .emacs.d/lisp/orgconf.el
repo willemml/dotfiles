@@ -4,6 +4,18 @@
 
 ;;; Code:
 
+(require 'org)
+(require 'org-roam)
+(require 'org-tempo)
+(require 'org-fragtog)
+(require 'org-roam-ui)
+(require 'org-roam-dailies)
+(require 'org-latex-impatient)
+(require 'ox-publish)
+(require 'plantuml-mode)
+(require 'emacsql-sqlite)
+(require 'graphviz-dot-mode)
+
 (setq org-roam-directory (file-truename "~/Documents/org-roam"))
 (setq org-roam-db-location (expand-file-name "org-roam.db" org-roam-directory))
 
@@ -21,17 +33,7 @@
 		:target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
 		:unnarrowed t) ))))
 
-(require 'emacsql-sqlite)
-(require 'org-roam)
-(require 'org-roam-ui)
-(require 'org-roam-dailies)
-(require 'org-tempo)
-(require 'org-latex-impatient)
-(require 'org-fragtog)
-(require 'ox-publish)
-(require 'graphviz-dot-mode)
-
-(org-roam-db-autosync-mode)
+;(org-roam-db-autosync-mode)
 
 (defun my/org-roam-node-insert-immediate (arg &rest args)
   "Insert a link to a new node without capturing anything."
@@ -106,7 +108,7 @@ window otherwise opens in current window."
 
 ;; Disable evaluation confirmation for certain languages.
 (defun my/org-confirm-babel-evaluate (lang body)
-  (not (member lang '("plantuml"))))
+  (not (member lang '("plantuml" "dot"))))
 
 (setq org-confirm-babel-evaluate 'my/org-confirm-babel-evaluate)
 
