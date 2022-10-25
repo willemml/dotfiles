@@ -91,6 +91,8 @@ window otherwise opens in current window."
 (add-hook 'org-mode-hook 'org-latex-impatient-mode)
 (add-hook 'org-mode-hook 'auto-fill-mode)
 
+(define-key graphviz-dot-mode-map (kbd "C-c C-y") 'graphviz-dot-indent-graph)
+
 (org-babel-do-load-languages 'org-babel-load-languages '((ruby . t)
 														 (shell . t)
 														 (js . t)
