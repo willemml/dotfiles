@@ -18,6 +18,8 @@
 ;; Put all backup files in the Trash
 (setq backup-directory-alist '((".*" . "~/.Trash")))
 
+(require 'org-mac-image-paste)
+
 (provide 'macos)
 
 ;;; macos.el ends here

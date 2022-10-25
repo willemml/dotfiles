@@ -1,3 +1,54 @@
-[submodule ".local/OrgMark"]
-	path = .local/OrgMark
+[submodule ".emacs.d/gitpackages/OrgMark"]
+	path = .emacs.d/gitpackages/OrgMark
 	url = https://github.com/willemml/OrgMark
+[submodule ".emacs.d/gitpackages/org-mac-image-paste"]
+	path = .emacs.d/gitpackages/org-mac-image-paste
+	url = https://github.com/jdtsmith/org-mac-image-paste.git
+[submodule ".emacs.d/gitpackages/lsp-mode"]
+	path = .emacs.d/gitpackages/lsp-mode
+	url = https://github.com/emacs-lsp/lsp-mode.git
+[submodule ".emacs.d/gitpackages/graphviz-dot-mode"]
+	path = .emacs.d/gitpackages/graphviz-dot-mode
+	url = https://github.com/ppareit/graphviz-dot-mode.git
+[submodule ".emacs.d/gitpackages/format-all"]
+	path = .emacs.d/gitpackages/format-all
+	url = https://github.com/lassik/emacs-format-all-the-code.git
+[submodule ".emacs.d/gitpackages/dracula"]
+	path = .emacs.d/gitpackages/dracula
+	url = https://github.com/dracula/emacs.git
+[submodule ".emacs.d/gitpackages/emacsql"]
+	path = .emacs.d/gitpackages/emacsql
+	url = https://github.com/magit/emacsql.git
+[submodule ".emacs.d/gitpackages/org-roam-ui"]
+	path = .emacs.d/gitpackages/org-roam-ui
+	url = https://github.com/org-roam/org-roam-ui.git
+[submodule ".emacs.d/gitpackages/org-latex-impatient"]
+	path = .emacs.d/gitpackages/org-latex-impatient
+	url = https://github.com/yangsheng6810/org-latex-impatient
+[submodule ".emacs.d/gitpackages/org-fragtog"]
+	path = .emacs.d/gitpackages/org-fragtog
+	url = https://github.com/io12/org-fragtog.git
+[submodule ".emacs.d/gitpackages/lsp-java"]
+	path = .emacs.d/gitpackages/lsp-java
+	url = https://github.com/emacs-lsp/lsp-java.git
+[submodule ".emacs.d/gitpackages/lsp-ui"]
+	path = .emacs.d/gitpackages/lsp-ui
+	url = https://github.com/emacs-lsp/lsp-ui.git
+[submodule ".emacs.d/gitpackages/company-mode"]
+	path = .emacs.d/gitpackages/company-mode
+	url = https://github.com/company-mode/company-mode.git
+[submodule ".emacs.d/gitpackages/org-mode"]
+	path = .emacs.d/gitpackages/org-mode
+	url = https://git.savannah.gnu.org/git/emacs/org-mode.git
+[submodule ".emacs.d/gitpackages/yasnippet"]
+	path = .emacs.d/gitpackages/yasnippet
+	url = https://github.com/joaotavora/yasnippet.git
+[submodule ".emacs.d/gitpackages/yasnippet-snippets"]
+	path = .emacs.d/gitpackages/yasnippet-snippets
+	url = https://github.com/AndreaCrotti/yasnippet-snippets.git
+[submodule ".emacs.d/gitpackages/rust-mode"]
+	path = .emacs.d/gitpackages/rust-mode
+	url = https://github.com/rust-lang/rust-mode.git
+[submodule ".emacs.d/gitpackages/tree-sitter"]
+	path = .emacs.d/gitpackages/tree-sitter
+	url = https://github.com/emacs-tree-sitter/elisp-tree-sitter

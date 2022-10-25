@@ -11,7 +11,7 @@
 (set-keyboard-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
 
-(setq native-comp-async-report-warnings-errors t)
+(setq native-comp-async-report-warnings-errors nil)
 (setq warning-minimum-level 'error)
 
 ;; Set Custom file to avoid clutter in this one
@@ -27,15 +27,22 @@
 
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 
+(let ((default-directory (expand-file-name "~/.emacs.d/gitpackages")))
+  (normal-top-level-add-subdirs-to-load-path))
+
 ;; If darwin load macOS settings.
 (if (eq system-type 'darwin)
 	(require 'macos))
 
+;; Load config
 (require 'myfuncs)
-(require 'packages)
 (require 'orgconf)
 (require 'orgmark)
 (require 'lspconf)
+
+;; Load yasnippet
+(require 'yasnippet)
+(require 'yasnippet-snippets)
 
 ;; Enable yasnippet
 (yas-global-mode 1)

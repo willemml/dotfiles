@@ -23,11 +23,13 @@
 
 (require 'emacsql-sqlite)
 (require 'org-roam)
+(require 'org-roam-ui)
 (require 'org-roam-dailies)
 (require 'org-tempo)
 (require 'org-latex-impatient)
 (require 'org-fragtog)
 (require 'ox-publish)
+(require 'graphviz-dot-mode)
 
 (org-roam-db-autosync-mode)
 
@@ -92,6 +94,7 @@ window otherwise opens in current window."
 (org-babel-do-load-languages 'org-babel-load-languages '((ruby . t)
 														 (shell . t)
 														 (js . t)
+														 (dot . t)
 														 (calc . t)
 														 (plantuml . t)
 														 (C . t)))

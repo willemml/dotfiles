@@ -9,8 +9,16 @@
 (require 'company)
 (require 'rust-mode)
 (require 'format-all)
+
 (require 'tree-sitter)
+(require 'tree-sitter-hl)
 (require 'tree-sitter-langs)
+(require 'tree-sitter-debug)
+(require 'tree-sitter-query)
+
+(require 'lsp-ui)
+(require 'lsp-mode)
+(require 'lsp-java)
 
 ;; Don't use tabs for indents
 (setq indent-tabs-mode nil)
@@ -30,8 +38,9 @@
 ;; Bind Emacs built in completion using completion-at-point to "C-M-i"
 (global-set-key (kbd "C-M-i") 'completion-at-point)
 
-;; bind format-all for handling code formatting/prettifying.
-(global-set-key (kbd "C-c C-y")  'format-all-buffer)
+;; Keybind to format/prettify document, uses either format-all or
+;; lsp-mode depending on availability
+(global-set-key (kbd "C-c C-y")  'my/format-document)
 
 ;; Set the default formatters so that you aren't prompted every time.
 (setq-default format-all-formatters format-all-default-formatters)
@@ -80,8 +89,18 @@
   (interactive)
   (my/generic-code-hook)
   (lsp-deferred)
-  (local-set-key (kbd "C-c C-y") 'lsp-format-buffer)
+  (my/lsp-mode-formatter)
   (tree-sitter-hl-mode))
+
+(defun my/format-document ()
+  "Formats the buffer using 'lsp-format-buffer'.
+Falls back to 'format-all-buffer' if LSP does not support formatting."
+  (interactive)
+  (cond ((lsp-feature? "textDocument/formatting")
+		 (lsp-format-buffer))
+		((lsp-feature? "textDocument/rangeFormatting")
+		 (lsp-format-buffer))
+		(t (format-all-buffer))))
 
 (add-hook 'javascript-mode-hook 'my/enable-ide-features)
 (add-hook 'java-mode-hook 'my/enable-ide-features)
@@ -89,6 +108,7 @@
 (add-hook 'rust-mode-hook 'my/enable-ide-features)
 (add-hook 'sh-mode-hook 'my/enable-ide-features)
 (add-hook 'c-mode-hook 'my/enable-ide-features)
+
 (add-hook 'emacs-lisp-mode-hook 'my/generic-code-hook)
 
 
