@@ -33,7 +33,7 @@
 		:target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
 		:unnarrowed t) ))))
 
-;(org-roam-db-autosync-mode)
+(org-roam-db-autosync-mode)
 
 (defun my/org-roam-node-insert-immediate (arg &rest args)
   "Insert a link to a new node without capturing anything."
