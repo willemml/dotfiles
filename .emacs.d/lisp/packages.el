@@ -55,10 +55,6 @@
 
 (my/install-required-packages)
 
-(if (eq system-type 'darwin)
-	(require 'org-mac-image-paste))
-
-
 (provide 'packages)
 
 ;;; packages.el ends here
