@@ -89,7 +89,6 @@
   (interactive)
   (my/generic-code-hook)
   (lsp-deferred)
-  (my/lsp-mode-formatter)
   (tree-sitter-hl-mode))
 
 (defun my/format-document ()

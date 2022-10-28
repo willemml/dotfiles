@@ -25,9 +25,6 @@
 							 tree-sitter
 							 tree-sitter-langs))
 
-(let ((default-directory (expand-file-name "~/.emacs.d/gitpackages")))
-  (normal-top-level-add-subdirs-to-load-path))
-
 ;; Enable package manager
 (require 'package)
 
