@@ -61,3 +61,5 @@ flycheck_*.el
 /.emacs.d/elpa
 /.emacs.d/url
 /.emacs.d/workspace
+/.emacs.d/mac/Emacs.app/Contents/MacOS/libexec
+

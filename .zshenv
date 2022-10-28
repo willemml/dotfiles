@@ -34,8 +34,8 @@ export GPG_TTY=$(tty)
 # k8s
 export KUBECONFIG="$HOME/homelab/kubespray-admin.conf"
 
-# nvim UBC
-export PATH="$PATH:$HOME/.local/nvim-linux64/bin"
+EMACS_BIN="/Applications/Emacs.app/Contents/MacOS/bin/"
+[[ -d "$EMACS_BIN" ]] && export PATH="$EMACS_BIN:$PATH"
 
 if type emacsclient &>/dev/null; then
 	export EDITOR=('emacsclient' '-c')
@@ -121,3 +121,4 @@ fi
 if type x86_64-unknown-linux-gnu-ar &>/dev/null; then
 	export AR_x86_64_unknown_linux_gnu=x86_64-unknown-linux-gnu-ar
 fi
+
