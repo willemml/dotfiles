@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: Aligned Equation
+# key: aeq
+# --
+\begin{equation}
+\begin{aligned}
+$1 &= $2 \\\
+$3 &= $4
+\end{aligned}
+\end{equation}

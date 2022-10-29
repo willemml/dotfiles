@@ -30,6 +30,7 @@
 ;; Load config
 (require 'myfuncs)
 (require 'packages)
+(require 'ivyconf)
 (require 'orgconf)
 (require 'lspconf)
 

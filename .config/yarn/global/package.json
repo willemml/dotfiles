@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "eslint": "^8.26.0",
     "mathjax-node-cli": "^1.0.1",
     "nodemcu-tool": "^3.2.1",
     "prettier": "^2.7.1",

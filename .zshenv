@@ -5,6 +5,9 @@ export ZSH="$HOME/.oh-my-zsh"
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
+# Emacs lsp-mode use plists
+export LSP_USE_PLISTS=true
+
 # Brew
 if [ -f "/opt/homebrew/bin/brew" ]; then
 	export HOMEBREW_NO_ANALYTICS=0
@@ -34,6 +37,7 @@ export GPG_TTY=$(tty)
 # k8s
 export KUBECONFIG="$HOME/homelab/kubespray-admin.conf"
 
+# add bin folder of self contained emacs app to path
 EMACS_BIN="/Applications/Emacs.app/Contents/MacOS/bin/"
 [[ -d "$EMACS_BIN" ]] && export PATH="$EMACS_BIN:$PATH"
 
@@ -82,7 +86,6 @@ fi
 
 # Java
 JHOME="/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home"
-#JHOME="/opt/homebrew/opt/openjdk"
 if [ -d "$JHOME" ]; then
 	export JAVA_HOME="$JHOME"
 	export PATH="$JAVA_HOME/bin:$PATH"

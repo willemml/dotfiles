@@ -110,6 +110,8 @@ Falls back to 'format-all-buffer' if LSP does not support formatting."
 
 (add-hook 'emacs-lisp-mode-hook 'my/generic-code-hook)
 
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
 
 (provide 'lspconf)
 

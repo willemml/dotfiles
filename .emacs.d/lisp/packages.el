@@ -16,6 +16,10 @@
 							 lsp-mode
 							 lsp-java
                              lsp-ui
+							 ivy
+							 counsel
+							 swiper
+							 flycheck
 							 git-modes
 							 groovy-mode
 							 company

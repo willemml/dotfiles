@@ -1,1 +1,1 @@
-./configure --enable-mac-app --with-mac --enable-mac-self-contained --with-modules --with-xwidgets --with-pop --with-mailutils --with-native-compilation
+./configure --with-mac --with-mac-metal --enable-mac-app --with-native-compilation --with-mailutils --with-imagemagick --with-json --with-modules

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Limit as x approaches (insert sign or not) infinity
+# key: lxi
+# --
+\lim_{x\to$1\infty}{$2}
