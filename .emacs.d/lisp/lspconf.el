@@ -105,9 +105,10 @@ Falls back to 'format-all-buffer' if LSP does not support formatting."
 (add-hook 'java-mode-hook 'my/enable-ide-features)
 (add-hook 'html-mode-hook 'my/enable-ide-features)
 (add-hook 'rust-mode-hook 'my/enable-ide-features)
-(add-hook 'sh-mode-hook 'my/enable-ide-features)
 (add-hook 'c-mode-hook 'my/enable-ide-features)
 
+(add-hook 'sh-mode-hook 'my/generic-code-hook)
+(add-hook 'sh-mode-hook 'tree-sitter-hl-mode)
 (add-hook 'emacs-lisp-mode-hook 'my/generic-code-hook)
 
 (add-hook 'after-init-hook #'global-flycheck-mode)

@@ -42,18 +42,20 @@ EMACS_BIN="/Applications/Emacs.app/Contents/MacOS/bin/"
 [[ -d "$EMACS_BIN" ]] && export PATH="$EMACS_BIN:$PATH"
 
 if type emacsclient &>/dev/null; then
-	export EDITOR=('emacsclient' '-c')
+	export EDITOR=('emacsclient')
 	if type emacs &>/dev/null; then
 		EDITOR+=('-a' 'emacs')
 	fi
 elif type nano &>/dev/null; then
 	export EDITOR='nano'
+elif type vi &>/dev/null; then
+	export EDITOR='vi'
 elif nc -z 1.1.1.1 53 >/dev/null 2>&1; then
 	echo "You don't seem to have any text editors but you DO have an internet connection..."
 	echo "You should probably install a text editor."
 	export EDITOR="echo Why haven\'t you installed an editor yet?"
 else
-	echo "You probably DON'T have an internet connect OR a text editor..."
+	echo "You probably DON'T have an internet connection OR a text editor..."
 	echo "So you're probably completely fucked."
 	export EDITOR='echo "I told you that you were fucked..."'
 fi

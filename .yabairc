@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 #
 # for this to work you must configure sudo such that
@@ -10,44 +10,76 @@
 yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
 sudo yabai --load-sa
 
-# configure borders
-yabai -m config window_border                off
-yabai -m config window_border_width          2
-yabai -m config active_window_border_color   0xff775759
-yabai -m config normal_window_border_color   0xff555555
+# window appearance
+yabai -m config window_border off
+yabai -m config window_border_width 2
+yabai -m config active_window_border_color 0xff775759
+yabai -m config normal_window_border_color 0xff555555
+yabai -m config active_window_opacity 1.0
+yabai -m config normal_window_opacity 0.90
+yabai -m config window_shadow on
+yabai -m config window_opacity off
+yabai -m config window_opacity_duration 0.0
 
+# layout and window gap/padding
+yabai -m config layout bsp
+yabai -m config top_padding 10
+yabai -m config bottom_padding 10
+yabai -m config left_padding 10
+yabai -m config right_padding 10
+yabai -m config window_gap 10
+
+# windows
+yabai -m config window_placement second_child
+yabai -m config window_topmost on
 
 # global settings
-yabai -m config mouse_follows_focus          off
-yabai -m config focus_follows_mouse          off
-yabai -m config window_placement             second_child
-yabai -m config window_shadow                on
-yabai -m config window_opacity               off
-yabai -m config window_opacity_duration      0.0
-yabai -m config active_window_opacity        1.0
-yabai -m config normal_window_opacity        0.90
-yabai -m config split_ratio                  0.50
-yabai -m config auto_balance                 off
-yabai -m config mouse_modifier               ctrl
-yabai -m config mouse_action1                move
-yabai -m config mouse_action2                resize
-yabai -m config mouse_drop_action            swap
+yabai -m config mouse_follows_focus off
+yabai -m config focus_follows_mouse autofocus
+yabai -m config split_ratio 0.50
+yabai -m config auto_balance off
+yabai -m config mouse_modifier fn
+yabai -m config mouse_action1 move
+yabai -m config mouse_action2 resize
+yabai -m config mouse_drop_action swap
 
-# general space settings
-yabai -m config layout                       bsp
-yabai -m config top_padding                  10
-yabai -m config bottom_padding               10
-yabai -m config left_padding                 10
-yabai -m config right_padding                10
-yabai -m config window_gap                   10
+DISPLAY_COUNT=$(yabai -m query --displays | jq length)
 
-# app specific rules
-yabai -m rule --add label="Finder" app="^Finder$" title="(Co(py|nnect)|Move|Info|Pref)" manage=off
-yabai -m rule --add label="Safari" app="^Safari$" title="^(General|(Tab|Password|Website|Extension)s|AutoFill|Se(arch|curity)|Privacy|Advance)$" manage=off
+# spaces labels
+yabai -m space 1 --label main --create
+yabai -m space 2 --label code --create
+if (($DISPLAY_COUNT == 1)); then
+	yabai -m space 3 --label secondary --create
+	yabai -m space 4 --label random --create
+elif (($DISPLAY_COUNT == 2)); then
+	yabai -m space 3 --label random --create
+	yabai -m space 5 --label secondary --create
+elif (($DISPLAY_COUNT == 3)); then
+	yabai -m space 5 --label secondary --create
+	yabai -m space 6 --label random --create
+fi
+
+# disable auto management for some apps
+yabai -m rule --add label="Finder Dialogs" app="^Finder$" title="(Co(py|nnect)|Move|Info|Pref)" manage=off
+yabai -m rule --add label="Safari Preferences" app="^Safari$" title="^(General|(Tab|Password|Website|Extension)s|AutoFill|Se(arch|curity)|Privacy|Advance)$" manage=off
 yabai -m rule --add label="System Settings" app="^System Settings$" title=".*" manage=off
 yabai -m rule --add label="App Store" app="^App Store$" manage=off
 yabai -m rule --add label="Activity Monitor" app="^Activity Monitor$" manage=off
 yabai -m rule --add label="Calculator" app="^Calculator$" manage=off
 yabai -m rule --add label="Dictionary" app="^Dictionary$" manage=off
+yabai -m rule --add label="iTerm Preferences" app="^iTerm$" title="Preferences" manage=off
+
+# force apps to always be on specific spaces
+yabai -m rule --add label="iTerm Location" app="^iTerm$" space="main" manage=on
+
+yabai -m rule --add label="Safari Location" app="^Safari$" space="secondary" manage=on
+
+yabai -m rule --add label="Music Location" app="^Music$" space="random" manage=on
+yabai -m rule --add label="Discord Location" app="^Discord$" space="random" manage=on
+yabai -m rule --add label="Messages Location" app="^Messages$" space="random" manage=on
+yabai -m rule --add label="Telegram Location" app="^Telegram$" space="random" manage=on
+
+yabai -m rule --add label="Emacs Location" app="^Emacs$" space="code" manage=on
+yabai -m rule --add label="Xcode Location" app="^Xcode$" space="code" manage=on
 
 echo "yabai configuration loaded.."

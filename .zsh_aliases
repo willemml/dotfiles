@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh
+
 ## Package Manager - brew
 if type brew &>/dev/null; then
 	function pi {
@@ -25,8 +27,7 @@ alias zshrc="$EDITOR ~/.zshrc"
 alias zshenv="$EDITOR ~/.zshenv"
 alias zshaliases="$EDITOR ~/.zsh_aliases"
 
-alias em='emacsclient -c -n -a "emacs"'
-alias emw='emacsclient -c -a "emacs"'
+alias em='emacsclient'
 
 alias reload='source ~/.zshrc'
 
