@@ -1,11 +1,11 @@
 #+title: SKHD Config
-#+PROPERTY: header-args:skhd :tangle "../.skhdrc"
-#+PROPERTY: header-args:skhd+ :comments link
+#+PROPERTY: header-args:sh :tangle "../.skhdrc"
+#+PROPERTY: header-args:sh+ :comments link
 
 Configure [[https://github.com/koekeishiya/skhd][skhd]], primarily to make navigating my
 [[file:./yabai.org][yabai setup]] more efficient.
 
-#+begin_src skhd
+#+begin_src sh
   # This file was generated from an org-mode document see the docs
   # directory.
 #+end_src
@@ -14,7 +14,7 @@ Configure [[https://github.com/koekeishiya/skhd][skhd]], primarily to make navig
 
 Easily navigate between different spaces.
 
-#+begin_src skhd
+#+begin_src sh
   ctrl + cmd - 1 : yabai -m space --focus term
   ctrl + cmd - 2 : yabai -m space --focus code
   ctrl + cmd - 3 : yabai -m space --focus web
@@ -25,7 +25,7 @@ Easily navigate between different spaces.
 
 Easily switch to certain apps.
 
-#+begin_src skhd
+#+begin_src sh
   ctrl + cmd - d : source ~/.yabairc --sources && focus_application Discord
   ctrl + cmd - e : source ~/.yabairc --sources && focus_application Emacs
   ctrl + cmd - s : source ~/.yabairc --sources && focus_application Safari
