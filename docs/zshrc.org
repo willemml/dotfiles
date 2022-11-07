@@ -15,14 +15,44 @@ My ZSH config, very simple, uses [[https://github.com/romkatv/powerlevel10k][pow
 
 Installed using the script, see [[https://github.com/zplug/zplug#the-best-way][the instructions]] in the zplug readme.
 
+** Init
+
 Run zplug's init file, ensure that everything is installed correctly,
 choose some plugins and load everything.
+
+#+begin_src shell
+  test -e "${HOME}/.zplug/init.zsh" && source ${HOME}/.zplug/init.zsh
+#+end_src
+
+** Check
+
+Check if there is anything not installed, if there is, prompt to
+install it.
+
+#+begin_src shell
+  if ! zplug check; then
+	  printf "Install? [y/N]: "
+	  if read -q; then
+		  echo; zplug install
+	  fi
+  fi
+#+end_src
+
+** Plugins
+
+Choose which plugins to install and where to install them from.
 
 #+begin_src shell
   zplug "zplug/zplug", hook-build:"zplug --self-manage", from:github
   zplug "romkatv/powerlevel10k", as:theme, from:github, depth:1
   zplug "zsh-users/zsh-syntax-highlighting", defer:2
+#+end_src
 
+** Load
+
+Finally load everything.
+
+#+begin_src shell
   zplug load
 #+end_src
 
@@ -60,4 +90,13 @@ exists.)
 
 #+begin_src shell
   [[ ! -f $HOME/.zsh_aliases ]] || source $HOME/.zsh_aliases
+#+end_src
+
+* Finish loading p10k
+
+Now that everything else is done, load my full powerlevel10k
+configuration file.
+
+#+begin_src shell
+  [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 #+end_src
