@@ -58,13 +58,12 @@ Enable tiling mode and configure the window padding and gap.
 
 ** Windows
 
-Make sure floating windows are always on top also make child windows
-spawn in the right side of a split.
+Make child windows spawn in the right side of a split.
 
 #+begin_src sh
   function init_window_placement {
 	  yabai -m config window_placement second_child
-	  yabai -m config window_topmost on
+	  yabai -m config window_topmost off
   }
 #+end_src
 
@@ -414,17 +413,17 @@ Make sure apps stay in their designated spaces.
 
 #+begin_src sh
   function init_location_rules {
-	  yabai -m rule --add label="loc_iterm" app="^iTerm$" space="term" manage=on
+	  yabai -m rule --add label="loc_iterm" app="^iTerm$" space="term"
 
-	  yabai -m rule --add label="loc_safari" app="^Safari$" space="web" manage=on
+	  yabai -m rule --add label="loc_safari" app="^Safari$" space="web"
 
-	  yabai -m rule --add label="loc_music" app="^Music$" space="random" manage=on
-	  yabai -m rule --add label="loc_discord" app="^Discord$" space="random" manage=on
-	  yabai -m rule --add label="loc_messages" app="^Messages$" space="random" manage=on
-	  yabai -m rule --add label="loc_telegram" app="^Telegram$" space="random" manage=on
+	  yabai -m rule --add label="loc_music" app="^Music$" space="random"
+	  yabai -m rule --add label="loc_discord" app="^Discord$" space="random"
+	  yabai -m rule --add label="loc_messages" app="^Messages$" space="random"
+	  yabai -m rule --add label="loc_telegram" app="^Telegram$" space="random"
 
-	  yabai -m rule --add label="loc_xcode" app="^Xcode$" space="code" manage=on
-	  yabai -m rule --add label="loc_emacs" app="^Emacs$" space="code" manage=on
+	  yabai -m rule --add label="loc_xcode" app="^Xcode$" space="code"
+	  yabai -m rule --add label="loc_emacs" app="^Emacs$" space="code"
   }
 #+end_src
 

@@ -1,4 +1,4 @@
-#+title Docs
+#+title: Docs
 
 Documentation and definitions for my literate dotfiles.
 
