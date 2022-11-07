@@ -5,42 +5,54 @@
 # No heading:1 ends here
 
 # [[file:docs/yabai.org::*Scripting addition][Scripting addition:1]]
-yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
-sudo yabai --load-sa
+function init_scripting {
+	yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa" label="load_scripting_additions"
+	sudo yabai --load-sa
+}
 # Scripting addition:1 ends here
 
 # [[file:docs/yabai.org::*Window appearance][Window appearance:1]]
-yabai -m config window_border off
-yabai -m config window_shadow off
-yabai -m config window_opacity off
+function init_appearance {
+	yabai -m config window_border off
+	yabai -m config window_shadow off
+	yabai -m config window_opacity off
+}
 # Window appearance:1 ends here
 
 # [[file:docs/yabai.org::*Layout & padding][Layout & padding:1]]
-yabai -m config layout bsp
-yabai -m config top_padding 10
-yabai -m config bottom_padding 10
-yabai -m config left_padding 10
-yabai -m config right_padding 10
-yabai -m config window_gap 10
+function init_layout_padding {
+	yabai -m config layout bsp
+	yabai -m config top_padding 10
+	yabai -m config bottom_padding 10
+	yabai -m config left_padding 10
+	yabai -m config right_padding 10
+	yabai -m config window_gap 10
+}
 # Layout & padding:1 ends here
 
 # [[file:docs/yabai.org::*Windows][Windows:1]]
-yabai -m config window_placement second_child
-yabai -m config window_topmost on
+function init_window_placement {
+	yabai -m config window_placement second_child
+	yabai -m config window_topmost on
+}
 # Windows:1 ends here
 
 # [[file:docs/yabai.org::*Mouse][Mouse:1]]
-yabai -m config mouse_follows_focus on
-yabai -m config focus_follows_mouse autofocus
-yabai -m config mouse_modifier fn
-yabai -m config mouse_action1 move
-yabai -m config mouse_action2 resize
-yabai -m config mouse_drop_action swap
+function init_mouse {
+	yabai -m config mouse_follows_focus on
+	yabai -m config focus_follows_mouse autofocus
+	yabai -m config mouse_modifier fn
+	yabai -m config mouse_action1 move
+	yabai -m config mouse_action2 resize
+	yabai -m config mouse_drop_action swap
+}
 # Mouse:1 ends here
 
 # [[file:docs/yabai.org::*Splits][Splits:1]]
-yabai -m config split_ratio 0.50
-yabai -m config auto_balance off
+function init_splits {
+	yabai -m config split_ratio 0.50
+	yabai -m config auto_balance off
+}
 # Splits:1 ends here
 
 # [[file:docs/yabai.org::*Get spaces][Get spaces:1]]
@@ -48,7 +60,7 @@ function get_spaces {
 	if [ -z ${1+x} ]; then
 		yabai -m query --spaces
 	else
-		get_spaces | jq --arg display $1 'map(select(.display == $display))'
+		get_spaces | jq --arg display $1 'map(select(.display == ($display | tonumber)))'
 	fi
 }
 # Get spaces:1 ends here
@@ -76,7 +88,7 @@ function get_space_on_display {
 	test -z ${1+x} && echo "missing display" && return 1
 	test -z ${2+x} && echo "missing space" && return 1
 
-	get_spaces | jq --arg display $1 --arg space $2 'map(select(.display == $display))[$space].index'
+	get_spaces | jq --arg display $1 --arg space $2 'map(select(.display == ($display | tonumber)))[($space | tonumber)].index'
 }
 # Get space on display:1 ends here
 
@@ -113,23 +125,49 @@ function delete_space {
 function count_spaces {
 	test -z ${1+x} && echo "missing display" && return 1
 
-	get_spaces | jq --arg display $2 'map(select(.display == $display)) | length'
+	get_spaces | jq --arg display $1 'map(select(.display == ($display | tonumber))) | length'
 }
 # Count spaces:1 ends here
+
+# [[file:docs/yabai.org::*Get application window][Get application window:1]]
+function get_application_window {
+	test -z ${1+x} && echo "missing app name" && return 1
+	get_windows | jq --arg app "$1" 'map(select(.app == $app)) | .[0].id'
+}
+# Get application window:1 ends here
+
+# [[file:docs/yabai.org::*Cleanup spaces][Cleanup spaces:1]]
+function cleanup_spaces {
+	for i in $(seq 1 $(count_displays)); do
+		for j in $(seq 1 $(count_spaces $i)); do
+			delete_space $i $j
+		done
+	done
+}
+# Cleanup spaces:1 ends here
 
 # [[file:docs/yabai.org::*Ensure spaces][Ensure spaces:1]]
 function ensure_spaces {
 	test -z ${1+x} && echo "missing display" && return 1
 	test -z ${2+x} && echo "missing number of spaces" && return 1
 
-	while (($(count_spaces $1) > $2)); do
+	while [ "$(count_spaces $1)" -gt "$2" ]; do
 		delete_space $1 0
 	done
-	while (($(count_spaces $1) < $2)); do
+	while [ "$(count_spaces $1)" -lt "$2" ]; do
 		create_space $1 0
 	done
 }
 # Ensure spaces:1 ends here
+
+# [[file:docs/yabai.org::*Focus application][Focus application:1]]
+function focus_application {
+	test -z ${1+x} && echo "missing app name" && return 1
+	local window_id=$(get_application_window $1)
+	test "$window_id" = "null" && echo "no windows found for that app" && return 1
+	yabai -m window --focus $window_id
+}
+# Focus application:1 ends here
 
 # [[file:docs/yabai.org::*Single display][Single display:1]]
 function single_display_spaces {
@@ -143,8 +181,8 @@ function single_display_spaces {
 
 # [[file:docs/yabai.org::*Double display][Double display:1]]
 function dual_display_spaces {
-	ensure_spaces 1 2
-	ensure_spaces 2 2
+	ensure_spaces 1 3
+	ensure_spaces 2 1
 	yabai -m space $(get_space_on_display 1 0) --label term
 	yabai -m space $(get_space_on_display 1 1) --label code
 	yabai -m space $(get_space_on_display 2 0) --label web
@@ -154,56 +192,105 @@ function dual_display_spaces {
 
 # [[file:docs/yabai.org::*Triple display][Triple display:1]]
 function triple_display_spaces {
-	ensure_spaces 1 1
+	ensure_spaces 1 2
 	ensure_spaces 2 1
-	ensure_spaces 3 2
+	ensure_spaces 3 1
 	yabai -m space $(get_space_on_display 1 0) --label term
+	yabai -m space $(get_space_on_display 1 1) --label random
 	yabai -m space $(get_space_on_display 2 0) --label web
 	yabai -m space $(get_space_on_display 3 0) --label code
-	yabai -m space $(get_space_on_display 3 1) --label random
 }
 # Triple display:1 ends here
 
 # [[file:docs/yabai.org::*Init][Init:1]]
 function init_spaces {
+	cleanup_spaces
 	(($(count_displays) == 1)) && single_display_spaces
 	(($(count_displays) == 2)) && dual_display_spaces
 	(($(count_displays) == 3)) && triple_display_spaces
-}
 
-init_spaces
+	echo "Spaces initialized, found $(count_displays) displays."
+}
 # Init:1 ends here
 
 # [[file:docs/yabai.org::*Init][Init:2]]
-yabai -m event --add event=display_added action="init_spaces" label="init_space_add_disp"
-yabai -m event --add event=display_removed action="init_spaces" label="init_space_del_disp"
+function init_spaces_signals {
+	yabai -m signal --add \
+		  event=display_added \
+		  action="source ~willem/.yabairc --sources && on_display_update" \
+		  label="init_space_add_disp"
+	yabai -m signal --add \
+		  event=display_removed \
+		  action="source ~willeml/.yabairc --sources && on_display_update" \
+		  label="init_space_del_disp"
+}
 # Init:2 ends here
 
 # [[file:docs/yabai.org::*Dialogs + Utilities][Dialogs + Utilities:1]]
-yabai -m rule --add label="float_finder_dialogs" app="^Finder$" title="(Co(py|nnect)|Move|Info|Pref)" manage=off
-yabai -m rule --add label="float_safari_prefs" app="^Safari$" title="^(General|(Tab|Password|Website|Extension)s|AutoFill|Se(arch|curity)|Privacy|Advance)$" manage=off
-yabai -m rule --add label="float_settings" app="^System Settings$" title=".*" manage=off
-yabai -m rule --add label="float_appstore" app="^App Store$" manage=off
-yabai -m rule --add label="float_activitymon" app="^Activity Monitor$" manage=off
-yabai -m rule --add label="float_calc" app="^Calculator$" manage=off
-yabai -m rule --add label="float_dictionary" app="^Dictionary$" manage=off
-yabai -m rule --add label="float_iterm_prefs" app="^iTerm$" title="Preferences" manage=off
+function init_floating_rules {
+	yabai -m rule --add label="float_finder_dialogs" app="^Finder$" title="(Co(py|nnect)|Move|Info|Pref)" manage=off
+	yabai -m rule --add label="float_safari_prefs" app="^Safari$" title="^(General|(Tab|Password|Website|Extension)s|AutoFill|Se(arch|curity)|Privacy|Advance)$" manage=off
+	yabai -m rule --add label="float_settings" app="^System Settings$" title=".*" manage=off
+	yabai -m rule --add label="float_appstore" app="^App Store$" manage=off
+	yabai -m rule --add label="float_activitymon" app="^Activity Monitor$" manage=off
+	yabai -m rule --add label="float_calc" app="^Calculator$" manage=off
+	yabai -m rule --add label="float_dictionary" app="^Dictionary$" manage=off
+	yabai -m rule --add label="float_iterm_prefs" app="^iTerm$" title="Preferences" manage=off
+}
 # Dialogs + Utilities:1 ends here
 
 # [[file:docs/yabai.org::*Spaces][Spaces:1]]
-yabai -m rule --add label="loc_iterm" app="^iTerm$" space="term" manage=on
+function init_location_rules {
+	yabai -m rule --add label="loc_iterm" app="^iTerm$" space="term" manage=on
 
-yabai -m rule --add label="loc_safari" app="^Safari$" space="web" manage=on
+	yabai -m rule --add label="loc_safari" app="^Safari$" space="web" manage=on
 
-yabai -m rule --add label="loc_music" app="^Music$" space="random" manage=on
-yabai -m rule --add label="loc_discord" app="^Discord$" space="random" manage=on
-yabai -m rule --add label="loc_messages" app="^Messages$" space="random" manage=on
-yabai -m rule --add label="loc_telegram" app="^Telegram$" space="random" manage=on
+	yabai -m rule --add label="loc_music" app="^Music$" space="random" manage=on
+	yabai -m rule --add label="loc_discord" app="^Discord$" space="random" manage=on
+	yabai -m rule --add label="loc_messages" app="^Messages$" space="random" manage=on
+	yabai -m rule --add label="loc_telegram" app="^Telegram$" space="random" manage=on
 
-yabai -m rule --add label="loc_xcode" app="^Xcode$" space="code" manage=on
-yabai -m rule --add label="loc_emacs" app="^Emacs$" space="code" manage=on
+	yabai -m rule --add label="loc_xcode" app="^Xcode$" space="code" manage=on
+	yabai -m rule --add label="loc_emacs" app="^Emacs$" space="code" manage=on
+}
 # Spaces:1 ends here
 
-# [[file:docs/yabai.org::*End][End:1]]
-echo "Yabai configuration loaded..."
-# End:1 ends here
+# [[file:docs/yabai.org::*On display update][On display update:1]]
+function on_display_update {
+	init_spaces
+	init_floating_rules
+	init_location_rules
+}
+# On display update:1 ends here
+
+# [[file:docs/yabai.org::*Init][Init:1]]
+function init_yabai {
+	echo "Initializing scriping additions..."
+	init_scripting
+	echo "Initializing appearance..."
+	init_appearance
+	echo "Initializing layout & padding..."
+	init_layout_padding
+	echo "Initializing window placement..."
+	init_window_placement
+	echo "Initializing mouse..."
+	init_mouse
+	echo "Initializing splits..."
+	init_splits
+
+	echo "Initializing spaces..."
+	init_spaces
+	echo "Initializing signals for spaces..."
+	init_spaces_signals
+	echo "Initializing floating window rules..."
+	init_floating_rules
+	echo "Initializing tiling location rules..."
+	init_location_rules
+
+	echo "Yabai configuration loaded."
+}
+
+if [ "${1}" != "--sources" ]; then
+	init_yabai
+fi
+# Init:1 ends here

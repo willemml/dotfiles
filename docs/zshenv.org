@@ -7,6 +7,11 @@ My ZSH environment, very specific to my system and dev workflow. Will
 likely be useless on systems that don't use the rest of my config and
 systems that are not running macOS.
 
+#+begin_src shell
+  # This script was generated from an org-mode document see the docs
+  # directory.
+#+end_src
+
 * Locale
 
 Set the locale, always UTF-8 and US english.

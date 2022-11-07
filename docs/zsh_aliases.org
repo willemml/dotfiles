@@ -5,6 +5,11 @@
 
 Aliases I use in ZSH, mostly to make editing and brew usage simpler.
 
+#+begin_src shell
+  # This script was generated from an org-mode document see the docs
+  # directory.
+#+end_src
+
 * Brew
 
 Check that homebrew is installed then create functions that are

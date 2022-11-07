@@ -1,4 +1,9 @@
 #!/usr/zsh
+# [[file:docs/zsh_aliases.org::+begin_src shell][No heading:1]]
+# This script was generated from an org-mode document see the docs
+# directory.
+# No heading:1 ends here
+
 # [[file:docs/zsh_aliases.org::*Brew][Brew:1]]
 if type brew &>/dev/null; then
 	function pi {

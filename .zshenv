@@ -1,4 +1,9 @@
 #!/usr/zsh
+# [[file:docs/zshenv.org::+begin_src shell][No heading:1]]
+# This script was generated from an org-mode document see the docs
+# directory.
+# No heading:1 ends here
+
 # [[file:docs/zshenv.org::*Locale][Locale:1]]
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
