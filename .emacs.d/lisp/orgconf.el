@@ -15,12 +15,21 @@
 (require 'plantuml-mode)
 (require 'emacsql-sqlite)
 (require 'graphviz-dot-mode)
+(require 'myfuncs)
 
 (setq org-roam-directory (file-truename "~/Documents/org-roam"))
 (setq org-roam-db-location (expand-file-name "org-roam.db" org-roam-directory))
 
 ;; Disable the 'validate' button on HTML exported Org docs.
 (setq org-html-validation-link nil)
+
+(defun my/indent-org-block-automatically ()
+  "Indent the current org code block."
+  (interactive)
+  (when (org-in-src-block-p)
+   (org-edit-special)
+    (indent-region (point-min) (point-max))
+    (org-edit-src-exit)))
 
 (my/customize-set-variables
  '('(org-roam-v2-ack t)
@@ -36,7 +45,7 @@
 (org-roam-db-autosync-mode)
 
 (defun my/org-roam-node-insert-immediate (arg &rest args)
-  "Insert a link to a new node without capturing anything."
+  "Insert a link to a new node ARG with ARGS without capturing anything."
   (interactive "P")
   (let ((args (cons arg args))
 		(org-roam-capture-templates (list (append (car org-roam-capture-templates)
@@ -57,16 +66,19 @@
     (org-open-at-point)))
 
 (defun my/org-roam-filter-by-tag (tag-name)
+  "Filter org notes by tag TAG-NAME."
   (lambda (node)
     (member tag-name (org-roam-node-tags node))))
 
 (defun my/org-roam-list-notes-by-tag (tag-name)
+  "List all org notes with the tag TAG-NAME."
   (mapcar #'org-roam-node-file
           (seq-filter
            (my/org-roam-filter-by-tag tag-name)
            (org-roam-node-list))))
 
 (defun my/refresh-agenda-list ()
+  "Refresh the list of files to search for agenda entries."
   (interactive)
   (setq org-agenda-files
 		(delete-dups
@@ -82,8 +94,8 @@
 (my/refresh-agenda-list)
 
 (defun my/follow-org-link (arg)
-  "Follow a link in org-mode If an argument is given, opens in new
-window otherwise opens in current window."
+  "Follow a link in orgmode If ARG is given.
+Opens in new window otherwise opens in current window."
   (interactive "P")
   (if arg
       (org-open-at-point)
@@ -101,16 +113,15 @@ window otherwise opens in current window."
 														 (dot . t)
 														 (calc . t)
 														 (plantuml . t)
+														 (emacs-lisp . t)
 														 (C . t)))
 
 ;; Re-display images after executing org-babel (mainly for PlantUML)
 (add-hook 'org-babel-after-execute-hook #'org-redisplay-inline-images)
 
-;; Disable evaluation confirmation for certain languages.
-(defun my/org-confirm-babel-evaluate (lang body)
-  (not (member lang '("plantuml" "dot"))))
-
-(setq org-confirm-babel-evaluate 'my/org-confirm-babel-evaluate)
+(setq org-confirm-babel-evaluate nil)
+(setq org-src-fontify-natively t)
+(setq org-src-tab-acts-natively t)
 
 ;; make it easy to publish all org docs as html
 (setq org-publish-project-alist
@@ -149,6 +160,7 @@ window otherwise opens in current window."
 						   ("C-c C-o" my/follow-org-link)
 						   ("C-c n c" org-id-get-create)
 						   ("C-c n n" org-roam-alias-add)
+						   ("C-c C-y" my/indent-org-block-automatically)
 						   ("C-c n t" org-roam-tag-add)))
 
 (provide 'orgconf)

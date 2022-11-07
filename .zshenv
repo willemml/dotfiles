@@ -127,3 +127,4 @@ if type x86_64-unknown-linux-gnu-ar &>/dev/null; then
 	export AR_x86_64_unknown_linux_gnu=x86_64-unknown-linux-gnu-ar
 fi
 
+export PATH=/Users/willem/.nimble/bin:$PATH

@@ -1,1 +1,1 @@
-./configure --with-mac --with-mac-metal --enable-mac-app --with-native-compilation --with-mailutils --with-imagemagick --with-json --with-modules
+./configure --with-mac --with-mac-metal --enable-mac-app --with-native-compilation --with-mailutils --with-imagemagick --with-json --with-modules --prefix=/usr/local/ --enable-mac-self-contained

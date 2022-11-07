@@ -32,6 +32,14 @@ if type pyenv > /dev/null; then
   eval "$(pyenv init -)"
 fi
 
+# Search when using up/down arrows instead of just scrolling history
+autoload -U up-line-or-beginning-search
+autoload -U down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey "^[[A" up-line-or-beginning-search # Up
+bindkey "^[[B" down-line-or-beginning-search # Down
+
 # Aliases
 [[ ! -f $HOME/.zsh_aliases ]] || source $HOME/.zsh_aliases
 
