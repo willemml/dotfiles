@@ -1,0 +1,220 @@
+ #+title: ZSH Environment
+#+PROPERTY: header-args:shell :shebang "#!/usr/zsh"
+#+PROPERTY: header-args:shell+ :tangle "../.zshenv"
+#+PROPERTY: header-args:shell+ :comments link
+
+My ZSH environment, very specific to my system and dev workflow. Will
+likely be useless on systems that don't use the rest of my config and
+systems that are not running macOS.
+
+* Locale
+
+Set the locale, always UTF-8 and US english.
+#+begin_src shell
+  export LC_ALL=en_US.UTF-8
+  export LANG=en_US.UTF-8
+#+end_src
+
+* Brew
+
+I use [[https://brew.sh][Homebrew]], this disables analytics and sets the path
+appropriately.
+
+#+begin_src shell
+  if [ -f "/opt/homebrew/bin/brew" ]; then
+	  export HOMEBREW_NO_ANALYTICS=0
+	  eval "$(/opt/homebrew/bin/brew shellenv)"
+  fi
+#+end_src
+
+* Language specific
+
+Setup for some of the languages I use and their paths. some of them
+include package managers I use (yarn, cargo, etc...)
+
+** Python
+
+I use [[https://github.com/pyenv/pyenv][pyenv]] to manage Python and due to some software still using 2.7.
+
+#+begin_src shell
+  if type pyenv > /dev/null; then
+	  eval "$(pyenv init --path)"
+	  eval "$(pyenv init -)"
+  fi
+#+end_src
+
+** Rust
+
+Let cargo inject it's environment.
+
+#+begin_src shell
+  CARGOENV="$HOME/.cargo/env"
+  if [ -f "$CARGOENV" ]; then
+	  . $CARGOENV
+  fi
+#+end_src
+
+*** Cross compiling
+
+Setup compiler flags for cross compiling Rust to x86_64 linux.
+
+#+begin_src shell
+  if type x86_64-unknown-linux-gnu-gcc &>/dev/null; then
+	  export CC_x86_64_unknown_linux_gnu=x86_64-unknown-linux-gnu-gcc
+	  export CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER=x86_64-unknown-linux-gnu-gcc
+  fi
+
+  if type x86_64-unknown-linux-gnu-g++ &>/dev/null; then
+	  export CXX_x86_64_unknown_linux_gnu=x86_64-unknown-linux-gnu-g++
+  fi
+
+  if type x86_64-unknown-linux-gnu-ar &>/dev/null; then
+	  export AR_x86_64_unknown_linux_gnu=x86_64-unknown-linux-gnu-ar
+  fi
+#+end_src
+
+** Node
+
+I use [[https://github.com/nvm-sh/nvm][nvm]] (Node Version Manager) to install an manage my Node.JS
+install. This also installs npm.
+
+#+begin_src shell
+  export NVM_DIR="$HOME/.local/nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+#+end_src
+
+I also use yarn to manage node packages on my system and in my
+projects.
+
+#+begin_src shell
+  export PATH="$HOME/.yarn/bin:$PATH"
+  export PATH="$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+#+end_src
+
+** Java
+
+Setup Java home and path, also configure CPP flags to include Java
+libraries. I use the [[https://adoptium.net/temurin/releases/][Eclipse Temurin]] JDK.
+
+#+begin_src shell
+  JHOME="/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home"
+  if [ -d "$JHOME" ]; then
+	  export JAVA_HOME="$JHOME"
+	  export PATH="$JAVA_HOME/bin:$PATH"
+	  export CPPFLAGS="-I$JAVA_HOME/include"
+  fi
+#+end_src
+
+** LLVM (C, C++, etc...)
+
+Setup includes and libraries for ~llvm~ if they are available. Also
+add ~arm-none-eabi~ to the include paths if available.
+
+#+begin_src shell
+  export CPPFLAGS="$CPPFLAGS -I/usr/local/opt/llvm/include"
+  IARM="/Applications/ARM/arm-none-eabi/include"
+  if [ -f "$IARM" ]; then
+	  export CPPFLAGS="$CPPFLAGS -I$IARM"
+  fi
+  ILLVM="/usr/local/opt/llvm/include"
+  if [ -f "$ILLVM" ]; then
+	  export CPPFLAGS="$CPPFLAGS -I$ILLVM"
+  fi
+  FLLVM="/usr/local/opt/llvm/lib"
+  if [ -f "$FLLVM" ]; then
+	  export LDFLAGS="$FLLVM"
+  fi
+#+end_src
+
+** Nim
+
+Add nim to path.
+
+#+begin_src shell
+  export PATH=/Users/willem/.nimble/bin:$PATH
+#+end_src
+
+* Editor
+
+Setup Emacs as the editor otherwise use nano or vi.
+
+#+begin_src shell
+  if type emacsclient &>/dev/null; then
+	  export EDITOR=('emacsclient')
+	  if type emacs &>/dev/null; then
+		  EDITOR+=('-a' 'emacs')
+	  fi
+  elif type nano &>/dev/null; then
+	  export EDITOR='nano'
+  else
+	  export EDITOR='vi'
+  fi
+#+end_src
+
+Set the visual and git editors.
+
+#+begin_src shell
+  if [[ -v EDITOR ]]; then
+	  export VISUAL="$EDITOR"
+	  export GIT_EDITOR="$EDITOR"
+  fi
+#+end_src
+
+Also add Emacs to the path when it is compiled as a self contained
+app.
+
+#+begin_src shell
+  EMACS_BIN="/Applications/Emacs.app/Contents/MacOS/bin/"
+  [[ -d "$EMACS_BIN" ]] && export PATH="$EMACS_BIN:$PATH"
+#+end_src
+
+Make sure lsp-mode uses plists for increased performance.
+
+#+begin_src shell
+  export LSP_USE_PLISTS=true
+#+end_src
+
+* Setup time format
+
+Change the format of the output of the time command.
+
+#+begin_src shell
+  read -r -d '' TIMEFMT <<EOM
+  %J   %U  user %S system %P cpu %*E total
+	avg shared (code):         %X KB
+	avg unshared (data/stack): %D KB
+	total (sum):               %K KB
+	max memory:                %M KB
+	page faults from disk:     %F
+	other page faults:         %R
+  EOM
+#+end_src
+
+* Other
+
+Smaller config items.
+
+** Path
+
+Add ~.local/bin~ to ~PATH~ if it exists.
+
+#+begin_src shell
+  [[ -d "$HOME/.local/bin/" ]] && export PATH="$HOME/.local/bin:$PATH"
+#+end_src
+
+** Set XDG home
+
+Make sure that ~XDG_CONFIG_HOME~ is set.
+
+#+begin_src shell
+  export XDG_CONFIG_HOME="$HOME/.config/"
+#+end_src
+
+** GPG
+
+Make sure ~GPG_TTY~ is set.
+
+#+begin_src shell
+  export GPG_TTY=$(tty)
+#+end_src

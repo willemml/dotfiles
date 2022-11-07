@@ -1,0 +1,68 @@
+#+title: ZSH Aliases & Functions
+#+PROPERTY: header-args:shell :shebang "#!/usr/zsh"
+#+PROPERTY: header-args:shell+ :tangle "../.zsh_aliases"
+#+PROPERTY: header-args:shell+ :comments link
+
+Aliases I use in ZSH, mostly to make editing and brew usage simpler.
+
+* Brew
+
+Check that homebrew is installed then create functions that are
+shortcuts to installing a package and then dumping the global Brewfile
+allowing for easy installation on new systems. Mostly taken from
+[[https://git.kdb424.xyz/kdb424/dotfiles-yadm/src/branch/master/.zsh_aliases][git.kdb424.xyz]].
+
+#+begin_src shell
+  if type brew &>/dev/null; then
+	  function pi {
+		  brew install "${@:1}"
+		  brew bundle dump --force --global
+	  }
+	  function pic {
+		  brew install --cask "${@:1}"
+		  brew bundle dump --force --global
+	  }
+	  function pr {
+		  brew uninstall "${@:1}"
+		  brew bundle dump --force --global
+	  }
+
+	  alias psearch="brew search"
+	  alias pinfo="brew info"
+	  alias pu="brew update && brew upgrade"
+	  alias orphans="brew autoremove"
+	  alias bdump="brew bundle dump --force --global"
+  fi
+#+end_src
+
+* Editor functions
+
+Make it easier to open an editor and also easier to edit crucial
+dotfiles. Commands to use ~emacsclient~ in a new frame with or without
+waiting for editing to finish. Also adds an alias to quickly reload
+the zsh config.
+
+#+begin_src shell
+  alias edit="$EDITOR"
+  alias zshrc="$EDITOR ~/docs/zshrc.org "
+  alias zshenv="$EDITOR ~/docs/zshenv.org"
+  alias zshaliases="$EDITOR ~/docs/zsh_aliases.org"
+
+  alias em='emacsclient -c -n'
+  alias emw='emacsclient -c'
+
+  alias reload='source ~/.zshenv && source ~/.zshrc'
+#+end_src
+
+* Other
+
+Use ~python3~ and ~pip3~, also make it easier to grep open programs.
+
+#+begin_src shell
+  if type python3 &>/dev/null; then
+	  alias python="python3"
+	  alias pip="pip3"
+  fi
+
+  alias psxa="ps xa | rg"
+#+end_src

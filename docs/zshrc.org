@@ -1,0 +1,63 @@
+#+title: ZSH Config
+#+PROPERTY: header-args:shell :shebang "#!/usr/zsh"
+#+PROPERTY: header-args:shell+ :tangle "../.zshrc"
+#+PROPERTY: header-args:shell+ :comments link
+
+My ZSH config, very simple, uses [[https://github.com/romkatv/powerlevel10k][powerlevel10k]] for the prompt and
+[[https://github.com/zplug/zplug][zplug]] for plugins.
+
+#+begin_src shell
+  # This script was generated from an org-mode document see the docs
+  # directory.
+#+end_src
+
+* zplug
+
+Installed using the script, see [[https://github.com/zplug/zplug#the-best-way][the instructions]] in the zplug readme.
+
+Run zplug's init file, ensure that everything is installed correctly,
+choose some plugins and load everything.
+
+#+begin_src shell
+  zplug "zplug/zplug", hook-build:"zplug --self-manage", from:github
+  zplug "romkatv/powerlevel10k", as:theme, from:github, depth:1
+  zplug "zsh-users/zsh-syntax-highlighting", defer:2
+
+  zplug load
+#+end_src
+
+* powerlevel10k (theme + instant prompt)
+
+Installed using [[zplug]]. This just sets it as the theme and enables the
+instant prompt feature.
+
+#+begin_src shell
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+#+end_src
+
+* Better history search
+
+Make is so that up/down arrows take into account what has already been
+typed in to the prompt as search terms.
+
+#+begin_src shell
+autoload -U up-line-or-beginning-search
+autoload -U down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey "^[[A" up-line-or-beginning-search   # Up
+bindkey "^[[B" down-line-or-beginning-search # Down
+#+end_src
+
+* Load zsh aliases
+
+Loads aliases from [[file:./zsh_aliases.org][.zsh_aliases]]. (After checking that the file
+exists.)
+
+#+begin_src shell
+  [[ ! -f $HOME/.zsh_aliases ]] || source $HOME/.zsh_aliases
+#+end_src

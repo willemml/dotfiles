@@ -1,0 +1,12 @@
+#+title Docs
+
+Documentation and definitions for my literate dotfiles.
+
+These documentation files are not just documentation, they are  used
+to generate my dotfiles using org-babel in Emacs.
+
+File list:
+- [[file:./zshrc.org][zshrc.org]]: ZSH config
+- [[file:./zshenv.org][zshenv.org]]: ZSH environment setup
+- [[file:./zsh_aliases.org][zsh_alaises.org]]: ZSH aliases and functions
+- [[file:./yabai.org][yabai.org]]: Configuration for Yabai

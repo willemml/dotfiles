@@ -1,6 +1,5 @@
-#!/usr/bin/env zsh
-
-## Package Manager - brew
+#!/usr/zsh
+# [[file:docs/zsh_aliases.org::*Brew][Brew:1]]
 if type brew &>/dev/null; then
 	function pi {
 		brew install "${@:1}"
@@ -21,19 +20,25 @@ if type brew &>/dev/null; then
 	alias orphans="brew autoremove"
 	alias bdump="brew bundle dump --force --global"
 fi
+# Brew:1 ends here
 
+# [[file:docs/zsh_aliases.org::*Editor functions][Editor functions:1]]
 alias edit="$EDITOR"
-alias zshrc="$EDITOR ~/.zshrc"
-alias zshenv="$EDITOR ~/.zshenv"
-alias zshaliases="$EDITOR ~/.zsh_aliases"
+alias zshrc="$EDITOR ~/docs/zshrc.org "
+alias zshenv="$EDITOR ~/docs/zshenv.org"
+alias zshaliases="$EDITOR ~/docs/zsh_aliases.org"
 
-alias em='emacsclient'
+alias em='emacsclient -c -n'
+alias emw='emacsclient -c'
 
-alias reload='source ~/.zshrc'
+alias reload='source ~/.zshenv && source ~/.zshrc'
+# Editor functions:1 ends here
 
+# [[file:docs/zsh_aliases.org::*Other][Other:1]]
 if type python3 &>/dev/null; then
 	alias python="python3"
 	alias pip="pip3"
 fi
 
 alias psxa="ps xa | rg"
+# Other:1 ends here
