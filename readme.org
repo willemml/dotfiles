@@ -1,0 +1,19 @@
+#+title: Dotfiles
+
+My dotfiles, managed using [[https://yadm.io][yadm]]. Currently macOS only, requires
+[[https://brew.sh][Homebrew]] and Xcode or the Xcode Command Line Tools to be
+installed. Also expects that SSH and GPG keys are setup as it enables
+git commit signing by default.
+
+See [[./docs]] for more info on specific parts, my goal is to have these
+dotfiles generated entirely by Emacs org-mode and org-babel.
+
+To install them run the following
+
+#+begin_src shell
+curl -fLo /tmp/yadm https://github.com/TheLocehiliosan/yadm/raw/master/yadm && chmod a+x /tmp/yadm
+
+/tmp/yadm clone --recursive https://github.com/willemml/dotfiles
+
+zsh "$HOME/.config/yadm/bootstrap"
+#+end_src
