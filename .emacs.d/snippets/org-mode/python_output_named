@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: python named (output)
+# key: _spyn
+# --
+#+name: $1
+#+begin_src python :results output :exports both
+  `yas-selected-text`
+  $0
+#+end_src

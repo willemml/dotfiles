@@ -22,6 +22,12 @@ Argument MAP keymap in which to bind the keys."
   (cd (expand-file-name folder))
   (call-interactively #'find-file))
 
+(defun my/electric-mode ()
+  "Enable some basic features for coding."
+  (interactive)
+  (electric-pair-local-mode)
+  (electric-indent-local-mode))
+
 (defun apsc160 ()
   "Shortcut to APSC 160 folder."
   (interactive)

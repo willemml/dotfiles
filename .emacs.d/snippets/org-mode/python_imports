@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Python session default imports
+# key: pyim
+# --
+#+begin_src python :results none :exports none :session $1
+import math
+import latexify
+#+end_src

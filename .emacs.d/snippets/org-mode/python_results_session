@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Python no code export (with session and raw results)
+# key: pync
+# --
+#+name: $1
+#+begin_src python :results output :exports results :session $2 :wrap raw
+$0
+#+end_src

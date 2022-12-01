@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Python no results (with session)
+# key: pynr
+# --
+#+begin_src python :results none :exports code :session $1
+$0
+#+end_src

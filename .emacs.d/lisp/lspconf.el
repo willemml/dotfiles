@@ -6,34 +6,99 @@
 
 ;;; Code:
 
-(require 'company)
-(require 'rust-mode)
-(require 'format-all)
+(use-package company
+  :ensure t
+  :defer t
+  :autoload company-text-icons-margin
+  :init
+  ;; Align company-mode tooltips to the right hand side
+  (setq company-tooltip-align-annotations t)
 
-(require 'tree-sitter)
-(require 'tree-sitter-hl)
-(require 'tree-sitter-langs)
-(require 'tree-sitter-debug)
-(require 'tree-sitter-query)
+  ;; Display number of completions before and after current suggestions
+  ;; in company-mode
+  (setq company-tooltip-offset-display 'lines)
 
-(require 'lsp-ui)
-(require 'lsp-mode)
-(require 'lsp-java)
+  ;; Display text icon of type in company popup
+  (setq company-format-margin-function #'company-text-icons-margin)
+  :hook ((company-mode . my/electric-mode)
+		 (sh-mode . company-mode)
+		 (emacs-lisp-mode . company-mode)))
 
-;; Don't use tabs for indents
-(setq indent-tabs-mode nil)
+(use-package rust-mode
+  :ensure t
+  :defer t
+  :bind (:map rust-mode-map
+			  ("C-c C-y" . lsp-format-buffer)
+			  ("C-c C-c" . rust-run-clippy)
+			  ("C-c C-r" . rust-run)
+			  ("C-c C-t" . rust-test)
+			  ("C-c C-o" . rust-compile)))
 
-;; Increase garbage collector threshold
-(setq gc-cons-threshold 100000000)
+(use-package format-all
+  :ensure t
+  :commands format-all-buffer
+  :defer t
+  :hook (my/electric-mode format-all-ensure-formatter))
 
-;; Increase emacs data read limit
-(setq read-process-output-max (* 1024 1024))
+(use-package tree-sitter
+  :ensure t
+  :defer t
+  :ensure tree-sitter-langs
+  :hook ((rust-mode c-mode shell-mode javascript-mode python-mode) .tree-sitter-hl-mode))
 
-;; Disable LSP logging
-(setq lsp-log-io nil)
+(use-package lsp-mode
+  :ensure t
+  :after format-all
+  :defer t
+  :autoload lsp-deferred lsp-feature
+  :commands lsp-format-buffer
+  :preface
+  (defun my/format-document ()
+	"Formats the buffer using 'lsp-format-buffer'.
+Falls back to 'format-all-buffer' if LSP does not support formatting."
+	(interactive)
+    (cond ((fboundp 'lsp-feature?)
+	       (cond ((lsp-feature? "textDocument/formatting")
+		          (lsp-format-buffer))
+		         ((lsp-feature? "textDocument/rangeFormatting")
+		          (lsp-format-buffer))
+		         (t (format-all-buffer))))
+          (t (format-all-buffer))))
+  :custom
+  (lsp-log-io nil "Disable LSP logging.")
+  (lsp-keymap-prefix "C-c l" "Set the prefix for 'lsp-command-keymap'")
+  :config
+  (lsp-treemacs-sync-mode 1)
+  :hook ((lsp-mode . company-mode)
+		 (rust-mode . lsp)
+		 (c-mode . lsp)
+		 (javascript-mode . lsp))
+  :bind ("C-c C-y" . my/format-document))
 
-;; Enable treemacs/lsp-mode sync
-(lsp-treemacs-sync-mode 1)
+(use-package lsp-ui :commands lsp-ui-mode :ensure t)
+(use-package lsp-ivy :commands lsp-ivy-workspace-symbol :ensure t)
+(use-package lsp-treemacs :commands lsp-treemacs-errors-list :ensure t)
+(use-package lsp-java
+  :ensure t
+  :custom
+  (lsp-java-format-settings-url
+   "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml" "Use Google's Java code styling.")
+  (lsp-java-format-settings-profile
+   "GoogleStyle" "Use the correct profile for code styling.")
+  (lsp-java-jdt-download-url
+   "https://download.eclipse.org/jdtls/milestones/1.16.0/jdt-language-server-1.16.0-202209291445.tar.gz" "Use jdtls 1.16.0.")
+  :hook (java-mode . lsp))
+
+(use-package flycheck
+  :ensure t
+  :hook (after-init . global-flycheck-mode))
+
+(use-package arduino-mode
+  :ensure t
+  :custom (arduino-executable "/Applications/Arduino.app/Contents/MacOS/Arduino"))
+(use-package flycheck-arduino
+  :ensure arduino-mode
+  :hook (arduino-mode flycheck-arduino-setup))
 
 ;; Bind Emacs built in completion using completion-at-point to "C-M-i"
 (global-set-key (kbd "C-M-i") 'completion-at-point)
@@ -41,78 +106,6 @@
 ;; Keybind to format/prettify document, uses either format-all or
 ;; lsp-mode depending on availability
 (global-set-key (kbd "C-c C-y")  'my/format-document)
-
-;; Set the default formatters so that you aren't prompted every time.
-(setq-default format-all-formatters format-all-default-formatters)
-
-;; Align company-mode tooltips to the right hand side
-(setq company-tooltip-align-annotations t)
-
-;; Display number of completions before and after current suggestions
-;; in company-mode
-(setq company-tooltip-offset-display 'lines)
-
-;; Display text icon of type in company popup
-(setq company-format-margin-function #'company-text-icons-margin)
-
-;; Binds for rust dev.
-(my/define-multiple-keys rust-mode-map
-						 '(
-                           ("C-c C-y" lsp-format-buffer)
-						   ("C-c C-c" rust-run-clippy)
-						   ("C-c C-r" rust-run)
-						   ("C-c C-t" rust-test)
-						   ("C-c C-o" rust-compile)))
-
-;; Use Google's Java code styling.
-(setq lsp-java-format-settings-url
-	  "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml")
-(setq lsp-java-format-settings-profile
-	  "GoogleStyle")
-
-;; Use jdtls 1.16.0
-(setq lsp-java-jdt-download-url
-	  "https://download.eclipse.org/jdtls/milestones/1.16.0/jdt-language-server-1.16.0-202209291445.tar.gz")
-
-;; Set indent level to 4
-(setq-default tab-width 4)
-
-(defun my/generic-code-hook ()
-  "Enable some basic features for coding."
-  (interactive)
-  (electric-pair-local-mode)
-  (company-mode)
-  (electric-indent-local-mode))
-
-(defun my/enable-ide-features ()
-  "Enable IDE features like electric pair/indent and LSP."
-  (interactive)
-  (my/generic-code-hook)
-  (lsp-deferred)
-  (tree-sitter-hl-mode))
-
-(defun my/format-document ()
-  "Formats the buffer using 'lsp-format-buffer'.
-Falls back to 'format-all-buffer' if LSP does not support formatting."
-  (interactive)
-  (cond ((lsp-feature? "textDocument/formatting")
-		 (lsp-format-buffer))
-		((lsp-feature? "textDocument/rangeFormatting")
-		 (lsp-format-buffer))
-		(t (format-all-buffer))))
-
-(add-hook 'javascript-mode-hook 'my/enable-ide-features)
-(add-hook 'java-mode-hook 'my/enable-ide-features)
-(add-hook 'html-mode-hook 'my/enable-ide-features)
-(add-hook 'rust-mode-hook 'my/enable-ide-features)
-(add-hook 'c-mode-hook 'my/enable-ide-features)
-
-(add-hook 'sh-mode-hook 'my/generic-code-hook)
-(add-hook 'sh-mode-hook 'tree-sitter-hl-mode)
-(add-hook 'emacs-lisp-mode-hook 'my/generic-code-hook)
-
-(add-hook 'after-init-hook #'global-flycheck-mode)
-
 
 (provide 'lspconf)
 

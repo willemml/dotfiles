@@ -1,1 +1,21 @@
 ./configure --with-mac --with-mac-metal --enable-mac-app --with-native-compilation --with-mailutils --with-imagemagick --with-json --with-modules --prefix=/usr/local/ --enable-mac-self-contained
+
+
+PREFIX=/opt/emacs-mac \
+CFLAGS="-I/opt/homebrew/Cellar/gcc/12.2.0/include -I/opt/homebrew/Cellar/libgccjit/12.2.0/include" \
+LDFLAGS="-L/opt/homebrew/lib/gcc/current $CFLAGS" \
+./configure \
+--with-mac \
+--with-mac-metal \
+--enable-mac-app="$PREFIX" \
+--infodir="$PREFIX/share/info"  \
+--prefix="$PREFIX" \
+--enable-locallisppath="$PREFIX/share/emacs/site-lisp" \
+--with-gnutls \
+--with-modules \
+--with-rsvg \
+--with-native-compilation \
+--with-xwidgets \
+--with-imagemagick \
+--with-json \
+--with-zlib
