@@ -77943,6 +77943,10 @@
 	<true/>
 	<key>IRMemory</key>
 	<integer>4</integer>
+	<key>LeftCommand</key>
+	<integer>7</integer>
+	<key>LeftOption</key>
+	<integer>2</integer>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -79368,7 +79372,7 @@
 	<key>Print In Black And White</key>
 	<true/>
 	<key>ShowFullScreenTabBar</key>
-	<true/>
+	<false/>
 	<key>SoundForEsc</key>
 	<false/>
 	<key>TabStyleWithAutomaticOption</key>

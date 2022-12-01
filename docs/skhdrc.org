@@ -1,9 +1,10 @@
 #+title: SKHD Config
-#+PROPERTY: header-args:sh :tangle "../.skhdrc"
+#+PROPERTY: header-args:sh :tangle "~/.skhdrc"
 #+PROPERTY: header-args:sh+ :comments link
 
 Configure [[https://github.com/koekeishiya/skhd][skhd]], primarily to make navigating my
-[[file:./yabai.org][yabai setup]] more efficient.
+[[file:./yabai.org][yabai setup]] more efficient. Go see the yabai config for more
+information on the different spaces.
 
 #+begin_src sh
   # This file was generated from an org-mode document see the docs
@@ -14,21 +15,66 @@ Configure [[https://github.com/koekeishiya/skhd][skhd]], primarily to make navig
 
 Easily navigate between different spaces.
 
+| Chord          | Action               |
+| ctrl + cmd - 1 | Focus terminal space |
+| ctrl + cmd - 2 | Focus code space     |
+| ctrl + cmd - 3 | Focus web space      |
+| ctrl + cmd - 4 | Focus random         |
+| ctrl + cmd - 9 | Previous space       |
+| ctrl + cmd - 0 | Next space           |
+
 #+begin_src sh
   ctrl + cmd - 1 : yabai -m space --focus term
   ctrl + cmd - 2 : yabai -m space --focus code
   ctrl + cmd - 3 : yabai -m space --focus web
   ctrl + cmd - 4 : yabai -m space --focus random
+  ctrl + cmd - 5 : yabai -m space --focus mail
+  ctrl + cmd - 9 : yabai -m space --focus prev
+  ctrl + cmd - 0 : yabai -m space --focus next
 #+end_src
 
 * App navigation
 
 Easily switch to certain apps.
 
+| Chord          | Action          |
+| ctrl + cmd - d | Go to Discord   |
+| ctrl + cmd - e | Go to Emacs     |
+| ctrl + cmd - x | Go to Xcode     |
+| ctrl + cmd - s | Go to Safari    |
+| ctrl + cmd - m | Go to iMessages |
+| ctrl + cmd - t | Go to iTerm2    |
+
+
 #+begin_src sh
   ctrl + cmd - d : source ~/.yabairc --sources && focus_application Discord
   ctrl + cmd - e : source ~/.yabairc --sources && focus_application Emacs
+  ctrl + cmd - x : source ~/.yabairc --sources && focus_application Xcode
   ctrl + cmd - s : source ~/.yabairc --sources && focus_application Safari
-  ctrl + cmd - m : source ~/.yabairc --sources && focus_application Messages
   ctrl + cmd - t : source ~/.yabairc --sources && focus_application iTerm2
+#+end_src
+
+* Layout
+
+| Chord                  | Action             |
+| ctrl + cmd + shift + r | Fix/refresh layout |
+| ctrl - [               |                    |
+
+** Fix/refresh
+
+Reruns the yabai layout settings (same as what happens when displays
+are unplugged or plugged in.)
+
+#+begin_src sh
+  ctrl + cmd + shift - r : source ~/.yabairc --sources && on_display_update
+#+end_src
+
+** Flip
+
+Flips the display either along the x or y axis, (mirrors it). Most
+useful on multi display setups to move say a code window to be
+directly next to or under a related window (i.e. documentation).
+
+#+begin_src sh
+
 #+end_src

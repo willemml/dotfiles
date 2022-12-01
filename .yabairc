@@ -34,6 +34,10 @@ function init_layout_padding {
 function init_window_placement {
 	yabai -m config window_placement second_child
 	yabai -m config window_topmost off
+	yabai -m config window_origin_display focused
+	yabai -m config split_ratio 0.50
+	yabai -m config auto_balance off
+
 }
 # Windows:1 ends here
 
@@ -47,13 +51,6 @@ function init_mouse {
 	yabai -m config mouse_drop_action swap
 }
 # Mouse:1 ends here
-
-# [[file:docs/yabai.org::*Splits][Splits:1]]
-function init_splits {
-	yabai -m config split_ratio 0.50
-	yabai -m config auto_balance off
-}
-# Splits:1 ends here
 
 # [[file:docs/yabai.org::*Get spaces][Get spaces:1]]
 function get_spaces {
@@ -139,8 +136,8 @@ function get_application_window {
 # [[file:docs/yabai.org::*Cleanup spaces][Cleanup spaces:1]]
 function cleanup_spaces {
 	for i in $(seq 1 $(count_displays)); do
-		for j in $(seq 1 $(count_spaces $i)); do
-			delete_space $i $j
+		for j in $(seq 2 $(count_spaces $i)); do
+			delete_space $i 0
 		done
 	done
 }
@@ -171,32 +168,35 @@ function focus_application {
 
 # [[file:docs/yabai.org::*Single display][Single display:1]]
 function single_display_spaces {
-	ensure_spaces 1 4
+	ensure_spaces 1 5
 	yabai -m space 1 --label term
-	yabai -m space 2 --label web
-	yabai -m space 3 --label code
+	yabai -m space 2 --label code
+	yabai -m space 3 --label web
 	yabai -m space 4 --label random
+	yabai -m space 5 --label mail
 }
 # Single display:1 ends here
 
 # [[file:docs/yabai.org::*Double display][Double display:1]]
 function dual_display_spaces {
-	ensure_spaces 1 3
+	ensure_spaces 1 4
 	ensure_spaces 2 1
 	yabai -m space $(get_space_on_display 1 0) --label term
 	yabai -m space $(get_space_on_display 1 1) --label code
+	yabai -m space $(get_space_on_display 1 2) --label random
+	yabai -m space $(get_space_on_display 1 3) --label mail	  
 	yabai -m space $(get_space_on_display 2 0) --label web
-	yabai -m space $(get_space_on_display 2 1) --label random
 }
 # Double display:1 ends here
 
 # [[file:docs/yabai.org::*Triple display][Triple display:1]]
 function triple_display_spaces {
-	ensure_spaces 1 2
+	ensure_spaces 1 3
 	ensure_spaces 2 1
 	ensure_spaces 3 1
 	yabai -m space $(get_space_on_display 1 0) --label term
 	yabai -m space $(get_space_on_display 1 1) --label random
+	yabai -m space $(get_space_on_display 1 2) --label mail
 	yabai -m space $(get_space_on_display 2 0) --label web
 	yabai -m space $(get_space_on_display 3 0) --label code
 }
@@ -205,11 +205,12 @@ function triple_display_spaces {
 # [[file:docs/yabai.org::*Init][Init:1]]
 function init_spaces {
 	cleanup_spaces
-	(($(count_displays) == 1)) && single_display_spaces
-	(($(count_displays) == 2)) && dual_display_spaces
-	(($(count_displays) == 3)) && triple_display_spaces
 
-	echo "Spaces initialized, found $(count_displays) displays."
+	local display_count=$(count_displays)
+
+	(($display_count == 1)) && single_display_spaces
+	(($display_count == 2)) && dual_display_spaces
+	(($display_count == 3)) && triple_display_spaces
 }
 # Init:1 ends here
 
@@ -236,12 +237,15 @@ function init_floating_rules {
 	yabai -m rule --add label="float_calc" app="^Calculator$" manage=off
 	yabai -m rule --add label="float_dictionary" app="^Dictionary$" manage=off
 	yabai -m rule --add label="float_iterm_prefs" app="^iTerm$" title="Preferences" manage=off
+	yabai -m rule --add label="float_xcode" app="^Xcode$" manage=off
 }
 # Dialogs + Utilities:1 ends here
 
 # [[file:docs/yabai.org::*Spaces][Spaces:1]]
 function init_location_rules {
 	yabai -m rule --add label="loc_iterm" app="^iTerm$" space="term"
+
+	yabai -m rule --add label="loc_mail" app="^Mail$" space="mail"
 
 	yabai -m rule --add label="loc_safari" app="^Safari$" space="web"
 
@@ -250,7 +254,6 @@ function init_location_rules {
 	yabai -m rule --add label="loc_messages" app="^Messages$" space="random"
 	yabai -m rule --add label="loc_telegram" app="^Telegram$" space="random"
 
-	yabai -m rule --add label="loc_xcode" app="^Xcode$" space="code"
 	yabai -m rule --add label="loc_emacs" app="^Emacs$" space="code"
 }
 # Spaces:1 ends here
@@ -265,6 +268,8 @@ function on_display_update {
 
 # [[file:docs/yabai.org::*Init][Init:1]]
 function init_yabai {
+	echo "Initializing yabai, found $(count_displays) displays."
+
 	echo "Initializing scriping additions..."
 	init_scripting
 	echo "Initializing appearance..."
@@ -275,8 +280,6 @@ function init_yabai {
 	init_window_placement
 	echo "Initializing mouse..."
 	init_mouse
-	echo "Initializing splits..."
-	init_splits
 
 	echo "Initializing spaces..."
 	init_spaces
@@ -284,7 +287,7 @@ function init_yabai {
 	init_spaces_signals
 	echo "Initializing floating window rules..."
 	init_floating_rules
-	echo "Initializing tiling location rules..."
+	echo "Initializing tilling location rules..."
 	init_location_rules
 
 	echo "Yabai configuration loaded."

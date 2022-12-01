@@ -1,6 +1,6 @@
 #+title: Yabai Config
 #+PROPERTY: header-args:sh :shebang "#!/bin/sh"
-#+PROPERTY: header-args:sh+ :tangle "../.yabairc"
+#+PROPERTY: header-args:sh+ :tangle "~/.yabairc"
 #+PROPERTY: header-args:sh+ :comments link
 
 Configure [[https://github.com/koekeishiya/yabai][yabai]] for use on my system. Yabai is a tiling window manager
@@ -58,12 +58,20 @@ Enable tiling mode and configure the window padding and gap.
 
 ** Windows
 
-Make child windows spawn in the right side of a split.
+Make child windows spawn in the right side of a split. Don't auto
+balance splits, also set the ratio of splitting to 50%.
+
+Also make sure new windows are spawned on the currently focused
+screen.
 
 #+begin_src sh
   function init_window_placement {
 	  yabai -m config window_placement second_child
 	  yabai -m config window_topmost off
+	  yabai -m config window_origin_display focused
+	  yabai -m config split_ratio 0.50
+	  yabai -m config auto_balance off
+
   }
 #+end_src
 
@@ -87,17 +95,6 @@ the mouse.
 	  yabai -m config mouse_action1 move
 	  yabai -m config mouse_action2 resize
 	  yabai -m config mouse_drop_action swap
-  }
-#+end_src
-
-** Splits
-
-Don't auto balance splits, also set the ratio of splitting to 50%.
-
-#+begin_src sh
-  function init_splits {
-	  yabai -m config split_ratio 0.50
-	  yabai -m config auto_balance off
   }
 #+end_src
 
@@ -248,8 +245,8 @@ Deletes all spaces except required (one per display).
 #+begin_src sh
   function cleanup_spaces {
 	  for i in $(seq 1 $(count_displays)); do
-		  for j in $(seq 1 $(count_spaces $i)); do
-			  delete_space $i $j
+		  for j in $(seq 2 $(count_spaces $i)); do
+			  delete_space $i 0
 		  done
 	  done
   }
@@ -296,19 +293,20 @@ Setup, organize and label spaces for different displays and tasks.
 Initializes spaces for use with single display (internal laptop
 display.)
 
-Currently just creates 4 spaces and names them according to their main
+Currently just creates 5 spaces and names them according to their main
 purpose, ~term~ for all terminal windows, ~web~ for web browsers and
 web related apps (e.g. electron apps). ~code~ for editors and coding
-(Emacs and Xcode) and then ~random~ for everything else (music, chat
-clients, etc...)
+(Emacs and Xcode), ~mail~ for email and then ~random~ for everything
+else (music, chat clients, etc...)
 
 #+begin_src sh
   function single_display_spaces {
-	  ensure_spaces 1 4
+	  ensure_spaces 1 5
 	  yabai -m space 1 --label term
-	  yabai -m space 2 --label web
-	  yabai -m space 3 --label code
+	  yabai -m space 2 --label code
+	  yabai -m space 3 --label web
 	  yabai -m space 4 --label random
+	  yabai -m space 5 --label mail
   }
 #+end_src
 
@@ -321,12 +319,13 @@ display for easier reading and more web browsing space.
 
 #+begin_src sh
   function dual_display_spaces {
-	  ensure_spaces 1 3
+	  ensure_spaces 1 4
 	  ensure_spaces 2 1
 	  yabai -m space $(get_space_on_display 1 0) --label term
 	  yabai -m space $(get_space_on_display 1 1) --label code
+	  yabai -m space $(get_space_on_display 1 2) --label random
+	  yabai -m space $(get_space_on_display 1 3) --label mail	  
 	  yabai -m space $(get_space_on_display 2 0) --label web
-	  yabai -m space $(get_space_on_display 2 1) --label random
   }
 #+end_src
 
@@ -342,11 +341,12 @@ at the same time (documentation + testing of code).
 
 #+begin_src sh
   function triple_display_spaces {
-	  ensure_spaces 1 2
+	  ensure_spaces 1 3
 	  ensure_spaces 2 1
 	  ensure_spaces 3 1
 	  yabai -m space $(get_space_on_display 1 0) --label term
 	  yabai -m space $(get_space_on_display 1 1) --label random
+	  yabai -m space $(get_space_on_display 1 2) --label mail
 	  yabai -m space $(get_space_on_display 2 0) --label web
 	  yabai -m space $(get_space_on_display 3 0) --label code
   }
@@ -360,11 +360,12 @@ accordingly.
 #+begin_src sh
   function init_spaces {
 	  cleanup_spaces
-	  (($(count_displays) == 1)) && single_display_spaces
-	  (($(count_displays) == 2)) && dual_display_spaces
-	  (($(count_displays) == 3)) && triple_display_spaces
 
-	  echo "Spaces initialized, found $(count_displays) displays."
+	  local display_count=$(count_displays)
+
+	  (($display_count == 1)) && single_display_spaces
+	  (($display_count == 2)) && dual_display_spaces
+	  (($display_count == 3)) && triple_display_spaces
   }
 #+end_src
 
@@ -404,16 +405,20 @@ managed by yabai and remain floating.
 	  yabai -m rule --add label="float_calc" app="^Calculator$" manage=off
 	  yabai -m rule --add label="float_dictionary" app="^Dictionary$" manage=off
 	  yabai -m rule --add label="float_iterm_prefs" app="^iTerm$" title="Preferences" manage=off
+	  yabai -m rule --add label="float_xcode" app="^Xcode$" manage=off
   }
 #+end_src
 
 ** Spaces
 
-Make sure apps stay in their designated spaces.
+Make sure apps stay in their designated spaces. Rules need to be
+reapplied after manual changes to "fix" things if wanted.
 
 #+begin_src sh
   function init_location_rules {
 	  yabai -m rule --add label="loc_iterm" app="^iTerm$" space="term"
+
+	  yabai -m rule --add label="loc_mail" app="^Mail$" space="mail"
 
 	  yabai -m rule --add label="loc_safari" app="^Safari$" space="web"
 
@@ -422,7 +427,6 @@ Make sure apps stay in their designated spaces.
 	  yabai -m rule --add label="loc_messages" app="^Messages$" space="random"
 	  yabai -m rule --add label="loc_telegram" app="^Telegram$" space="random"
 
-	  yabai -m rule --add label="loc_xcode" app="^Xcode$" space="code"
 	  yabai -m rule --add label="loc_emacs" app="^Emacs$" space="code"
   }
 #+end_src
@@ -448,6 +452,8 @@ again (usefull for signals).
 
 #+begin_src sh
   function init_yabai {
+	  echo "Initializing yabai, found $(count_displays) displays."
+
 	  echo "Initializing scriping additions..."
 	  init_scripting
 	  echo "Initializing appearance..."
@@ -458,8 +464,6 @@ again (usefull for signals).
 	  init_window_placement
 	  echo "Initializing mouse..."
 	  init_mouse
-	  echo "Initializing splits..."
-	  init_splits
 
 	  echo "Initializing spaces..."
 	  init_spaces
@@ -467,7 +471,7 @@ again (usefull for signals).
 	  init_spaces_signals
 	  echo "Initializing floating window rules..."
 	  init_floating_rules
-	  echo "Initializing tiling location rules..."
+	  echo "Initializing tilling location rules..."
 	  init_location_rules
 
 	  echo "Yabai configuration loaded."

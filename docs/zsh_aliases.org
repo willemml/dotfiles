@@ -1,6 +1,6 @@
 #+title: ZSH Aliases & Functions
 #+PROPERTY: header-args:shell :shebang "#!/usr/zsh"
-#+PROPERTY: header-args:shell+ :tangle "../.zsh_aliases"
+#+PROPERTY: header-args:shell+ :tangle "~/.zsh_aliases"
 #+PROPERTY: header-args:shell+ :comments link
 
 Aliases I use in ZSH, mostly to make editing and brew usage simpler.
@@ -70,4 +70,12 @@ Use ~python3~ and ~pip3~, also make it easier to grep open programs.
   fi
 
   alias psxa="ps xa | rg"
+#+end_src
+
+* Yabai
+
+Load custom yabai control functions from [[file:./yabairc.org][yabairc]].
+
+#+begin_src shell
+  source ~/.yabairc --sources
 #+end_src

@@ -1,6 +1,6 @@
  #+title: ZSH Environment
 #+PROPERTY: header-args:shell :shebang "#!/usr/zsh"
-#+PROPERTY: header-args:shell+ :tangle "../.zshenv"
+#+PROPERTY: header-args:shell+ :tangle "~/.zshenv"
 #+PROPERTY: header-args:shell+ :comments link
 
 My ZSH environment, very specific to my system and dev workflow. Will

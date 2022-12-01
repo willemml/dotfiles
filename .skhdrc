@@ -8,12 +8,23 @@ ctrl + cmd - 1 : yabai -m space --focus term
 ctrl + cmd - 2 : yabai -m space --focus code
 ctrl + cmd - 3 : yabai -m space --focus web
 ctrl + cmd - 4 : yabai -m space --focus random
+ctrl + cmd - 5 : yabai -m space --focus mail
+ctrl + cmd - 9 : yabai -m space --focus prev
+ctrl + cmd - 0 : yabai -m space --focus next
 # Spaces naviagtion:1 ends here
 
 # [[file:docs/skhdrc.org::*App navigation][App navigation:1]]
 ctrl + cmd - d : source ~/.yabairc --sources && focus_application Discord
 ctrl + cmd - e : source ~/.yabairc --sources && focus_application Emacs
+ctrl + cmd - x : source ~/.yabairc --sources && focus_application Xcode
 ctrl + cmd - s : source ~/.yabairc --sources && focus_application Safari
-ctrl + cmd - m : source ~/.yabairc --sources && focus_application Messages
 ctrl + cmd - t : source ~/.yabairc --sources && focus_application iTerm2
 # App navigation:1 ends here
+
+# [[file:docs/skhdrc.org::*Fix/refresh][Fix/refresh:1]]
+ctrl + cmd + shift - r : source ~/.yabairc --sources && on_display_update
+# Fix/refresh:1 ends here
+
+# [[file:docs/skhdrc.org::*Flip][Flip:1]]
+
+# Flip:1 ends here

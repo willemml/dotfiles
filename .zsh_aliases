@@ -47,3 +47,7 @@ fi
 
 alias psxa="ps xa | rg"
 # Other:1 ends here
+
+# [[file:docs/zsh_aliases.org::*Yabai][Yabai:1]]
+source ~/.yabairc --sources
+# Yabai:1 ends here

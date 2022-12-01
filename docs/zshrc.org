@@ -1,6 +1,6 @@
 #+title: ZSH Config
 #+PROPERTY: header-args:shell :shebang "#!/usr/zsh"
-#+PROPERTY: header-args:shell+ :tangle "../.zshrc"
+#+PROPERTY: header-args:shell+ :tangle "~/.zshrc"
 #+PROPERTY: header-args:shell+ :comments link
 
 My ZSH config, very simple, uses [[https://github.com/romkatv/powerlevel10k][powerlevel10k]] for the prompt and
